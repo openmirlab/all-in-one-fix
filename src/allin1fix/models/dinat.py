@@ -7,7 +7,66 @@ import math
 import torch
 from abc import ABC,  abstractmethod
 from typing import Optional, Tuple, Callable
-from natten.functional import natten1dav, natten1dqkrpb, natten2dav, natten2dqkrpb
+# from natten.functional import natten1dav, natten1dqkrpb, natten2dav, natten2dqkrpb
+# from natten.functional import na1d_av, na1d_qk, na2d_av, na2d_qk
+
+try:  # ── 1. "Short" names (was before ~0.19)
+    from natten.functional import na1d_av, na1d_qk, na2d_av, na2d_qk
+except ImportError:
+    try:  # ── 2. "Long" names (remained as alias)
+        from natten.functional import (
+            natten1dav as na1d_av,
+            natten1dqkrpb as na1d_qk,
+            natten2dav as na2d_av,
+            natten2dqkrpb as na2d_qk,
+        )
+    except ImportError:
+        # ── 3. Modern >=0.20: Building wrappers based on generic functions
+        from natten.functional import neighborhood_attention_generic as _na_generic
+
+        def wrap_qk(dim: int) -> Callable:
+            """(factory: creates a q-k function for 1-D or 2-D"""
+            def _fn(q, k, kernel, dilation, *, rpb=None):
+                ks = kernel if dim == 2 else int(kernel)          # (k,k)  или  k
+                dil = (dilation, dilation) if dim == 2 else int(dilation)
+                return _na_generic(
+                    q,                # query
+                    k,                # key  (we will pass the value further by the same function)
+                    k,                # dummy value – we only need weight
+                    kernel_size=ks,
+                    dilation=dil,
+                    is_causal=False,
+                    scale=None,
+                    # pass rpb if specified (in >=0.20 this is supported)
+                    attention_kwargs=dict(rpb=rpb) if rpb is not None else None,
+                )
+            return _fn
+
+        def _wrap_av(dim: int) -> Callable:
+            """factory: creates a function attn-prob × value"""
+            def _fn(attn, v, kernel, dilation):
+                ks = kernel if dim == 2 else int(kernel)
+                dil = (dilation, dilation) if dim == 2 else int(dilation)
+                # we call generic again, but with ready scales
+                return _na_generic(
+                    attn,            # «query» ← на самом деле уже prob
+                    v,               # key
+                    v,               # value
+                    kernel_size=ks,
+                    dilation=dil,
+                    is_causal=False,
+                    scale=None,
+                )
+            return _fn
+
+        # create final aliases
+        na1d_qk = _wrap_qk(dim=1)
+        na1d_av = _wrap_av(dim=1)
+        na2d_qk = _wrap_qk(dim=2)
+        na2d_av = _wrap_av(dim=2)
+        
+
+
 from ..config import Config
 from .utils import *
 
@@ -51,7 +110,8 @@ class DinatDropPath(nn.Module):
 class _NeighborhoodAttentionNd(ABC, nn.Module):
   # rpb is learnable relative positional biases; same concept is used Swin.
   rpb: nn.Parameter
-  nattendqkrpb: Callable
+  # 
+  na1d_qk: Callable
   nattendav: Callable
   
   def __init__(
@@ -96,8 +156,9 @@ class _NeighborhoodAttentionNd(ABC, nn.Module):
     
     # Compute NA between "query" and "key" to get the raw attention scores, and add relative positional biases.
     # attention_scores = natten2dqkrpb(query_layer, key_layer, self.rpb, self.dilation)
-    attention_scores = self.nattendqkrpb(query_layer, key_layer, self.rpb, self.kernel_size, self.dilation)
-    
+    # attention_scores = self.nattendqkrpb(query_layer, key_layer, self.rpb, self.kernel_size, self.dilation)
+    attention_scores = self.na_qk(query_layer, key_layer,  self.kernel_size, self.dilation, rpb=self.rpb)
+
     # Normalize the attention scores to probabilities.
     attention_probs = nn.functional.softmax(attention_scores, dim=-1)
     
@@ -141,8 +202,10 @@ class NeighborhoodAttention1d(_NeighborhoodAttentionNd):
       torch.zeros(num_heads, (2 * self.kernel_size - 1)),
       requires_grad=True,
     )
-    self.nattendqkrpb = natten1dqkrpb
-    self.nattendav = natten1dav
+    self.na_qk = na1d_qk
+    self.nattendav = na1d_av
+    # self.nattendqkrpb = natten1dqkrpb
+    # self.nattendav = natten1dav
 
 
 class NeighborhoodAttention2d(_NeighborhoodAttentionNd):
@@ -159,8 +222,10 @@ class NeighborhoodAttention2d(_NeighborhoodAttentionNd):
       torch.zeros(num_heads, (2 * self.kernel_size - 1), (2 * self.kernel_size - 1)),
       requires_grad=True,
     )
-    self.nattendqkrpb = natten2dqkrpb
-    self.nattendav = natten2dav
+    self.na_qk = na2d_qk
+    self.nattendav = na2d_av
+    # self.nattendqkrpb = natten2dqkrpb
+    # self.nattendav = natten2dav
 
 
 # Copied from transformers.models.nat.modeling_nat.NeighborhoodAttentionOutput

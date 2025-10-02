@@ -1,0 +1,45 @@
+All-In-One-Fix
+================
+
+This package integrates code from multiple open-source projects under the MIT License.
+
+1. All-In-One
+   - Repository: https://github.com/mir-aidj/all-in-one
+   - License: MIT License
+   - Copyright: (c) 2023 Taejun Kim
+   - Description: Core music structure analysis algorithms and models
+   - Usage: Used as the foundation for music information retrieval functionality
+
+2. Demucs
+   - Repository: https://github.com/facebookresearch/demucs
+   - License: MIT License
+   - Copyright: (c) Meta Platforms, Inc. and affiliates
+   - Version: v4.1.0a2
+   - Description: Source separation models (HTDemucs)
+   - Usage: Integrated in src/allin1fix/separation/ for stem-based analysis
+
+3. Integration and Modifications
+   - Copyright: (c) 2025 Bo-Yu Chen
+   - License: MIT License
+   - Description: Package integration, NATTEN upgrade (0.15.0→0.17.5),
+                  model caching, GPU memory management, modern UV-style packaging
+                  (with pip compatibility), and enhanced workflows
+
+All original copyright notices and license terms are preserved in the LICENSE file.
+
+For detailed information about what was integrated and modified, see:
+- docs/INTEGRATION.md - Integration details
+- docs/IMPROVEMENTS.md - Enhancement documentation
+- README.md - Project overview and acknowledgments
+
+Third-Party Dependencies
+========================
+
+This package also depends on several third-party libraries:
+- PyTorch - BSD-style license
+- NumPy - BSD license
+- librosa - ISC license
+- NATTEN (0.17.5) - MIT license
+- And others listed in pyproject.toml
+
+See each dependency's license file for full terms.

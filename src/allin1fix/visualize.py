@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import matplotlib.gridspec as gridspec
+import librosa
 import librosa.feature
-import demucs.separate
 
 from functools import partial
 from multiprocessing import Pool
@@ -63,9 +63,7 @@ def _plot(
   if colors is None:
     colors = HARMONIX_COLORS
 
-  sr = 44100
-  y = demucs.separate.load_track(result.path, 1, sr)[0].numpy()
-  # y, sr = librosa.load(result.path, sr=None, mono=True)
+  y, sr = librosa.load(result.path, sr=44100, mono=True)
   rms = librosa.feature.rms(y=y, frame_length=4096, hop_length=1024)[0]
 
   fig = plt.figure(figsize=(12, 2))

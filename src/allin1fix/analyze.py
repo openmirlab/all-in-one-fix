@@ -1,8 +1,10 @@
 import torch
 
-from typing import List, Union
+from typing import List, Union, Optional
 from tqdm import tqdm
 from .demix import demix
+from .stems import get_stems, StemProvider, DemucsProvider, PrecomputedStemProvider
+from .stems_input import StemsInput, prepare_stems_for_analysis, validate_stems_input
 from .spectrogram import extract_spectrograms
 from .models import load_pretrained_model
 from .visualize import visualize as _visualize
@@ -19,7 +21,7 @@ from .typings import AnalysisResult, PathLike
 
 
 def analyze(
-  paths: Union[PathLike, List[PathLike]],
+  paths: Union[PathLike, List[PathLike], StemsInput, List[StemsInput]] = None,
   out_dir: PathLike = None,
   visualize: Union[bool, PathLike] = False,
   sonify: Union[bool, PathLike] = False,
@@ -32,14 +34,20 @@ def analyze(
   keep_byproducts: bool = False,
   overwrite: bool = False,
   multiprocess: bool = True,
+  stem_provider: Optional[StemProvider] = None,
+  stems_dict: Optional[dict] = None,
+  skip_separation: bool = False,
+  stems_input: Union[StemsInput, List[StemsInput], List[dict]] = None,
 ) -> Union[AnalysisResult, List[AnalysisResult]]:
   """
   Analyzes the provided audio files and returns the analysis results.
 
   Parameters
   ----------
-  paths : Union[PathLike, List[PathLike]]
+  paths : Union[PathLike, List[PathLike], StemsInput, List[StemsInput]], optional
       List of paths or a single path to the audio files to be analyzed.
+      Can also be StemsInput object(s) for direct stems input.
+      If None, stems_input parameter must be provided.
   out_dir : PathLike, optional
       Path to the directory where the analysis results will be saved. By default, the results will not be saved.
   visualize : Union[bool, PathLike], optional
@@ -67,6 +75,15 @@ def analyze(
       Whether to overwrite the existing analysis results or not. Default is False.
   multiprocess : bool, optional
       Whether to use multiprocessing for spectrogram extraction, visualization, and sonification. Default is True.
+  stem_provider : Optional[StemProvider], optional
+      Custom stem provider for source separation. If None, uses default DemucsProvider.
+  stems_dict : Optional[dict], optional
+      Dictionary mapping audio paths to pre-computed stem directories. Alternative to stem_provider.
+  skip_separation : bool, optional
+      If True, assumes stems are already available and skips separation step. Default is False.
+  stems_input : Union[StemsInput, List[StemsInput], List[dict]], optional
+      Direct stems input. Provide pre-separated stem files (bass, drums, other, vocals) directly.
+      Alternative to paths parameter for stems-only workflow.
 
   Returns
   -------
@@ -74,16 +91,53 @@ def analyze(
       Analysis results for the provided audio files.
   """
 
-  # Clean up the arguments.
-  return_list = True
-  if not isinstance(paths, list):
-    return_list = False
-    paths = [paths]
-  if not paths:
-    raise ValueError('At least one path must be specified.')
-  paths = [mkpath(p) for p in paths]
-  paths = expand_paths(paths)
-  check_paths(paths)
+  # Handle different input modes
+  stems_mode = False
+  
+  # Check if we have stems input (either via paths or stems_input parameter)
+  if stems_input is not None:
+    stems_mode = True
+    if paths is not None:
+      raise ValueError('Cannot specify both paths and stems_input parameters')
+    
+    # Convert stems_input to list format
+    if not isinstance(stems_input, list):
+      stems_input = [stems_input]
+    
+    # Validate all stems inputs
+    validated_stems = [validate_stems_input(s) for s in stems_input]
+    
+    # Create pseudo-paths for stems (used for result identification)
+    paths = [mkpath(f"{s.name}.stems") for s in validated_stems]
+    return_list = len(validated_stems) > 1
+    
+  elif paths is not None:
+    # Check if paths contain StemsInput objects
+    if isinstance(paths, StemsInput):
+      stems_mode = True
+      validated_stems = [validate_stems_input(paths)]
+      paths = [mkpath(f"{validated_stems[0].name}.stems")]
+      return_list = False
+    elif isinstance(paths, list) and any(isinstance(p, StemsInput) for p in paths):
+      stems_mode = True
+      # Mix of StemsInput and regular paths not supported in this version
+      if not all(isinstance(p, StemsInput) for p in paths):
+        raise ValueError('Cannot mix StemsInput and regular paths in same analysis')
+      validated_stems = [validate_stems_input(p) for p in paths]
+      paths = [mkpath(f"{s.name}.stems") for s in validated_stems]
+      return_list = True
+    else:
+      # Regular audio file paths
+      return_list = True
+      if not isinstance(paths, list):
+        return_list = False
+        paths = [paths]
+      paths = [mkpath(p) for p in paths]
+      paths = expand_paths(paths)
+      check_paths(paths)
+  else:
+    raise ValueError('Either paths or stems_input must be specified')
+  
   demix_dir = mkpath(demix_dir)
   spec_dir = mkpath(spec_dir)
 
@@ -112,10 +166,37 @@ def analyze(
       for exist_path in tqdm(exist_paths, desc='Loading existing results')
     ]
 
+  # Initialize demix_paths and spec_paths as empty lists
+  demix_paths = []
+  spec_paths = []
+
   # Analyze the tracks that are not analyzed yet.
   if todo_paths:
-    # Run HTDemucs for source separation only for the tracks that are not analyzed yet.
-    demix_paths = demix(todo_paths, demix_dir, device)
+    if stems_mode:
+      # Direct stems input - prepare stems for analysis
+      todo_stems = [validated_stems[i] for i, path in enumerate(paths) if path in todo_paths]
+      demix_paths = prepare_stems_for_analysis(
+        todo_stems, 
+        demix_dir, 
+        use_symlinks=True
+      )
+      print(f'=> Using direct stems input for {len(todo_stems)} track(s).')
+    else:
+      # Handle source separation based on provided options
+      if skip_separation:
+        # Assume stems are already in demix_dir with expected structure
+        demix_paths = [demix_dir / 'htdemucs' / path.stem for path in todo_paths]
+        print(f'=> Skipping source separation, using existing stems.')
+      elif stems_dict:
+        # Use pre-computed stems from dictionary
+        stem_provider = PrecomputedStemProvider(stems_dict)
+        demix_paths = get_stems(todo_paths, demix_dir, stem_provider, device)
+      elif stem_provider is not None:
+        # Use custom stem provider
+        demix_paths = get_stems(todo_paths, demix_dir, stem_provider, device)
+      else:
+        # Default: use HTDemucs (backward compatibility)
+        demix_paths = demix(todo_paths, demix_dir, device)
 
     # Extract spectrograms for the tracks that are not analyzed yet.
     spec_paths = extract_spectrograms(demix_paths, spec_dir, multiprocess)
@@ -166,9 +247,19 @@ def analyze(
   if not keep_byproducts:
     for path in demix_paths:
       for stem in ['bass', 'drums', 'other', 'vocals']:
-        (path / f'{stem}.wav').unlink(missing_ok=True)
+        stem_file = path / f'{stem}.wav'
+        # Only remove if it's not a symlink (to avoid removing original files)
+        if stem_file.exists() and not stem_file.is_symlink():
+          stem_file.unlink(missing_ok=True)
+        elif stem_file.is_symlink():
+          stem_file.unlink(missing_ok=True)  # Remove symlink
       rmdir_if_empty(path)
-    rmdir_if_empty(demix_dir / 'htdemucs')
+    
+    # Clean up different demix subdirectories
+    for subdir in ['htdemucs', 'stems_input', 'custom']:
+      subdir_path = demix_dir / subdir
+      if subdir_path.exists():
+        rmdir_if_empty(subdir_path)
     rmdir_if_empty(demix_dir)
 
     for path in spec_paths:

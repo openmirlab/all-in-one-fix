@@ -3,20 +3,19 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "allin1"
+name = "allin1fix"
 dynamic = ["version"]
-description = "All-In-One Music Structure Analyzer"
+description = "All-In-One Music Structure Analyzer with integrated source separation"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = "MIT"
-keywords = ["music", "beat", "downbeat", "tracking", "structure", "analysis", "allin1"]
+keywords = ["music", "beat", "downbeat", "tracking", "structure", "analysis", "allin1fix", "source-separation"]
 authors = [
   { name = "Taejun Kim", email = "taejun@kaist.ac.kr" },
 ]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -26,12 +25,22 @@ classifiers = [
 dependencies = [
   "numpy",
   "librosa",
-  "natten; platform_system == 'Darwin'",
-  "demucs",
+  "natten==0.17.5",
   "hydra-core",
   "omegaconf",
   "huggingface_hub",
   "matplotlib",
+  "madmom @ git+https://github.com/CPJKU/madmom",
+  # Integrated source separation dependencies (from demucsfix)
+  "torch>=2.0.0,<3.0.0",
+  "torchaudio>=2.0.0,<3.0.0",
+  "julius>=0.2.3",
+  "lameenc>=1.2",
+  "diffq>=0.2.1",
+  "einops",
+  "dora-search>=0.1.12",
+  "openunmix",
+  "treetable",
 ]
 
 [project.optional-dependencies]
@@ -44,17 +53,20 @@ train = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/mir-aidj/all-in-one#readme"
-Issues = "https://github.com/mir-aidj/all-in-one/issues"
-Source = "https://github.com/mir-aidj/all-in-one"
+Documentation = "https://github.com/ChenPaulYu/all-in-one-fix#readme"
+Issues = "https://github.com/ChenPaulYu/all-in-one-fix/issues"
+Source = "https://github.com/ChenPaulYu/all-in-one-fix"
 
 [project.scripts]
-allin1 = "allin1.cli:main"
-allin1-train = "allin1.training.train:main"
-allin1-preprocess = "allin1.training.preprocess:main"
+allin1fix = "allin1fix.cli:main"
+allin1fix-train = "allin1fix.training.train:main"
+allin1fix-preprocess = "allin1fix.training.preprocess:main"
 
 [tool.hatch.version]
-path = "src/allin1/__about__.py"
+path = "src/allin1fix/__about__.py"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/allin1"]
+packages = ["src/allin1fix"]
+
+[tool.hatch.metadata]
+allow-direct-references = true

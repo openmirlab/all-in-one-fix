@@ -2,7 +2,6 @@ import numpy as np
 
 import torch
 import librosa
-import demucs.separate
 
 from functools import partial
 from multiprocessing import Pool
@@ -11,6 +10,7 @@ from tqdm import tqdm
 from numpy.typing import NDArray
 from .typings import AnalysisResult, PathLike, Segment
 from .utils import mkpath
+from .separation.audio import save_audio
 
 
 def sonify(
@@ -45,9 +45,7 @@ def _sonify(
   result: AnalysisResult,
   out_dir: PathLike = None,
 ) -> Tuple[NDArray, float]:
-  sr = 44100
-  y = demucs.separate.load_track(result.path, 2, sr).numpy()
-  # y, sr = librosa.load(result.path, sr=None, mono=False)
+  y, sr = librosa.load(result.path, sr=44100, mono=False)
 
   length = y.shape[-1]
   metronome = _sonify_metronome(result, length, sr)
@@ -60,7 +58,7 @@ def _sonify(
     out_dir = mkpath(out_dir)
     out_dir.mkdir(exist_ok=True, parents=True)
 
-    demucs.separate.save_audio(
+    save_audio(
       wav=torch.from_numpy(mixed),
       path=out_dir / f'{result.path.stem}.sonif{result.path.suffix}',
       samplerate=sr,
