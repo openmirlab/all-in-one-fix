@@ -250,7 +250,7 @@ pip install git+https://github.com/CPJKU/madmom
 
 **From source (recommended):**
 ```shell
-git clone <this-repository>
+git clone https://github.com/ChenPaulYu/all-in-one-fix.git
 cd all-in-one-fix
 pip install -e .
 ```
