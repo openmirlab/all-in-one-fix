@@ -903,6 +903,24 @@ dependencies = ["demucs", "natten>=0.15.0"]
 dependencies = ["natten==0.17.5"]  # Demucs integrated, no external dependency!
 ```
 
+### **Installation Methods**
+
+All-In-One-Fix supports both **UV** (recommended, faster) and **pip** (traditional):
+
+```bash
+# With UV (recommended, faster dependency resolution)
+uv pip install allin1fix
+
+# With traditional pip (still fully supported)
+pip install allin1fix
+
+# Editable install for development (works with both)
+uv pip install -e .
+pip install -e .
+```
+
+**Note**: The package uses modern `pyproject.toml` with [hatchling](https://github.com/pypa/hatch) backend, following [PEP 621](https://peps.python.org/pep-0621/) standards.
+
 ### **What Stays the Same**
 - ✅ All analysis results format (JSON structure unchanged)
 - ✅ All function signatures and return types
@@ -919,6 +937,7 @@ dependencies = ["natten==0.17.5"]  # Demucs integrated, no external dependency!
 - 🆕 Custom model integration
 - 🆕 Performance improvements (model caching, GPU cleanup)
 - 🆕 Better error handling and stability
+- 🆕 Modern packaging (UV-style with pip compatibility)
 
 ## Training
 Please refer to [TRAINING.md](docs/TRAINING.md).
