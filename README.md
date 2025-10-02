@@ -26,8 +26,8 @@ This package provides models for music structure analysis, predicting:
 ## 🆕 What's New in All-In-One-Fix (v2.0.0)
 
 ### 🎵 **Integrated Source Separation**
-- **Built-in Demucs**: Integrated Demucs v4.1.0a2 source separation directly into the package
-- **No External Dependencies**: Eliminated need for separate Demucs installation
+- **Source Separation**: Uses demucs-infer package for high-quality source separation
+- **Clean Dependencies**: Inference-only Demucs integration via demucs-infer package
 - **Model Caching**: Intelligent model caching for improved performance (6x faster on repeated use)
 - **GPU Memory Management**: Automatic GPU cleanup prevents out-of-memory errors
 - **Better Error Messages**: Fuzzy matching suggestions for model names
@@ -82,12 +82,14 @@ This package provides models for music structure analysis, predicting:
 
 ### Why This Fork?
 
-The original **All-In-One** package is an excellent music structure analysis tool, but it relied on external Demucs package that created maintenance challenges:
+The original **All-In-One** package is an excellent music structure analysis tool, but needed updates for modern PyTorch environments:
 
-1. **Dependency Management**: Required separate installation of Demucs for source separation
-2. **Version Conflicts**: Original Demucs had compatibility issues with PyTorch 2.x
-3. **Maintenance Burden**: Managing separate packages and version compatibility
-4. **Performance**: No model caching led to repeated downloads and slower processing
+1. **PyTorch 2.x Compatibility**: NATTEN library needed upgrade for PyTorch 2.x
+2. **Source Separation**: Required external Demucs (no longer maintained)
+3. **Performance**: No model caching, repeated model loading
+4. **Modern Tooling**: Packaging and dependency management improvements
+
+> **Note**: The original Demucs is no longer actively maintained by Meta AI Research. This fork uses **demucs-infer**, a maintained inference-only version with PyTorch 2.x support.
 
 ### What Changed in v2.0.0?
 
@@ -114,28 +116,28 @@ dependencies = ["natten==0.17.5"]
 
 **Impact:** All-In-One models now work seamlessly with PyTorch 2.x
 
-#### **2. Integrated Source Separation Module** 🎵
+#### **2. Streamlined Source Separation** 🎵
 
 **Before:**
 ```python
-# Required external demucs package (original by Meta)
-dependencies = ["demucs"]  # Separate package, PyTorch 1.x only
+# Required external demucs package (no longer maintained)
+dependencies = ["demucs"]  # PyTorch 1.x only, not actively maintained
 ```
 
 **After:**
 ```python
-# Demucs integrated into allin1fix.separation
-from allin1fix.separation import get_model, apply_model
+# Uses demucs-infer (maintained, PyTorch 2.x compatible)
+dependencies = ["demucs-infer"]
 ```
 
 **Changes Made:**
-- Integrated Demucs v4.1.0a2 source separation code directly into `allin1fix.separation` module
-- Built compatibility layer to work with modern PyTorch versions
-- Added model caching with `@property` pattern for 6x performance improvement
-- Implemented automatic GPU memory cleanup with `torch.cuda.empty_cache()`
-- Enhanced error messages with fuzzy matching for model names
+- Switched to demucs-infer (maintained fork of Demucs for inference)
+- PyTorch 2.x compatibility (no `torchaudio<2.1` restriction)
+- Added intelligent model caching for 6x performance improvement
+- Implemented automatic GPU memory cleanup
+- Enhanced error messages with model name suggestions
 
-**Impact:** Single unified package, faster performance, better memory management, no external separation dependencies
+**Impact:** Actively maintained dependencies, faster processing, modern PyTorch support
 
 #### **3. Enhanced Cache Management** 🗂️
 
@@ -150,7 +152,7 @@ from allin1fix.separation import get_model, apply_model
 #### **4. Documentation & Code Cleanup** 📝
 
 **Changes:**
-- Updated all references from "demucsfix" to "integrated separation module"
+- Updated to use demucs-infer package instead of embedded code
 - Added proper acknowledgments to both All-In-One and Demucs projects
 - Clarified integration source and original authorship
 - Improved docstrings and code comments
@@ -201,33 +203,32 @@ This project integrates two foundational open-source projects:
 - **[All-In-One](https://github.com/mir-aidj/all-in-one)** - Music structure analysis by Taejun Kim & Juhan Nam
 - **[Demucs](https://github.com/facebookresearch/demucs)** - Source separation by Meta AI Research
 
-**Integration Contributions (v2.0.0):**
-✅ Upgraded NATTEN from 0.15.0 to 0.17.5 for All-In-One compatibility
-✅ Built PyTorch 2.x compatibility layer for Demucs
-✅ Integrated Demucs into All-In-One as unified package
-✅ Added performance improvements (model caching, GPU cleanup)
-✅ Improved error messages and user experience
-✅ Added cache management utilities
-✅ Modernized packaging (UV-style with pip compatibility)
-✅ Maintained 100% backward compatibility
+**What's New in v2.0.0:**
+- ✅ NATTEN 0.17.5 for PyTorch 2.x compatibility
+- ✅ demucs-infer integration for source separation
+- ✅ Performance improvements (6x faster with model caching)
+- ✅ Enhanced error handling and cache management
+- ✅ Modern packaging with UV support
+- ✅ 100% backward compatible with All-In-One API
 
-**What We DID NOT Change:**
-❌ Core All-In-One algorithms (unchanged, by Taejun Kim & Juhan Nam)
-❌ Model architectures or training (unchanged, by Taejun Kim & Juhan Nam)
-❌ Demucs separation algorithms (unchanged, by Meta AI Research)
-❌ Research contributions (all credit to original authors)
+**What Stayed the Same:**
+- ✅ All-In-One model architectures (unchanged)
+- ✅ Beat/downbeat tracking algorithms (unchanged)
+- ✅ Tempo estimation (unchanged)
+- ✅ Structure segmentation (unchanged)
+- ✅ Research quality and accuracy (unchanged)
 
-**Credit Attribution:**
-- **Music structure analysis** → Taejun Kim & Juhan Nam ([All-In-One](https://github.com/mir-aidj/all-in-one))
-- **Source separation models** → Meta AI Research ([Demucs](https://github.com/facebookresearch/demucs))
-- **Integration & compatibility** → This fork
+**Credit:**
+- **All-In-One research** → Taejun Kim & Juhan Nam ([original paper](https://github.com/mir-aidj/all-in-one))
+- **Source separation** → demucs-infer package (based on Demucs by Meta AI Research)
+- **This fork** → PyTorch 2.x compatibility, performance improvements, modern tooling
 
 ## Installation
 
 ### Requirements
-- **Python**: 3.9+
+- **Python**: 3.10
 - **PyTorch**: 2.0+ (tested with 2.7+)
-- **NATTEN**: 0.17.5 (will be installed automatically)
+- **GPU**: CUDA-capable GPU recommended (CPU supported)
 
 ### 1. Install PyTorch
 
@@ -242,9 +243,12 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 ```shell
 # Install madmom from GitHub (required for beat tracking preprocessing)
 pip install git+https://github.com/CPJKU/madmom
+
+# Install demucs-infer from GitHub (required for source separation)
+pip install git+https://github.com/ChenPaulYu/demucs-infer.git
 ```
 
-**Note:** As of v2.0.0, Demucs source separation is integrated - no need to install it separately!
+**Note:** As of v2.0.0, Demucs source separation is integrated via **demucs-infer** package - a maintained, PyTorch 2.x compatible inference-only version of Demucs.
 
 ### 3. Install All-In-One-Fix
 
@@ -425,7 +429,7 @@ All-In-One-Fix includes several technical enhancements over the original:
 
 - **Modern PyTorch Support**: Compatible with PyTorch 2.x and CUDA 12.x
 - **NATTEN 0.17.5**: Upgraded from 0.15.0 for PyTorch 2.x compatibility
-- **Integrated Separation**: Demucs v4.1.0a2 built-in with model caching and GPU cleanup
+- **Source Separation**: Uses demucs-infer package with model caching and GPU cleanup
 - **Memory Optimization**: Automatic GPU memory cleanup prevents OOM errors on batch processing
 - **Performance**: 6x faster on repeated use with intelligent model caching
 - **Error Handling**: Better error messages with fuzzy matching and helpful suggestions
@@ -479,7 +483,7 @@ Stems Input Options:
 ```python
 from allin1fix import analyze
 
-# Analyze audio files (uses integrated Demucs separation)
+# Analyze audio files (uses demucs-infer for separation)
 results = analyze(['song1.wav', 'song2.mp3'])
 ```
 
@@ -899,8 +903,8 @@ allin1fix track.wav -o ./results
 # Old dependencies (All-In-One - original)
 dependencies = ["demucs", "natten>=0.15.0"]
 
-# v2.0.0+ dependencies (integrated separation)
-dependencies = ["natten==0.17.5"]  # Demucs integrated, no external dependency!
+# v2.0.0+ dependencies (uses demucs-infer)
+dependencies = ["natten==0.17.5", "demucs-infer"]  # Clean separation via demucs-infer!
 ```
 
 ### **Installation Methods**
@@ -930,8 +934,8 @@ pip install -e .
 
 ### **What's Enhanced**
 - 🆕 Modern PyTorch 2.x support (NATTEN 0.15.0 → 0.17.5 upgrade)
-- 🆕 Built compatibility layer for Demucs to work with PyTorch 2.x
-- 🆕 Integrated source separation (no external Demucs dependency)
+- 🆕 Uses demucs-infer package for PyTorch 2.x compatible separation
+- 🆕 Clean dependency management via demucs-infer
 - 🆕 Flexible source separation options
 - 🆕 Direct stems input capability
 - 🆕 Custom model integration
@@ -979,29 +983,31 @@ All-In-One-Fix (v2.0.0) is a unified package that combines:
 ### Key Principles
 
 **🎯 Respect Original Work:**
-- **Zero modifications** to core All-In-One algorithms or models
-- **Zero modifications** to Demucs separation algorithms
-- **Full credit** to original authors for their research contributions
-- **Proper attribution** in code, documentation, and research usage
+### Core Research: Unchanged ✅
 
-**🔧 Strategic Integration:**
-- Upgraded NATTEN 0.15.0 → 0.17.5 for All-In-One models
-- Built PyTorch 2.x compatibility layer for original Demucs code
-- Integrated Demucs v4.1.0a2 to eliminate external dependency
-- Added model caching, GPU cleanup, and cache management
-- Improved error messages and user experience
-- Maintained 100% backward compatibility
+- ✅ All-In-One model architectures (100% original)
+- ✅ Beat/downbeat/tempo algorithms (100% original)
+- ✅ Structure segmentation (100% original)
+- ✅ Research quality and accuracy (100% original)
 
-**📚 Clear Attribution:**
-- **All-In-One algorithms** → Taejun Kim & Juhan Nam ([original repo](https://github.com/mir-aidj/all-in-one))
-- **Demucs separation models** → Meta AI Research ([original repo](https://github.com/facebookresearch/demucs))
-- **Integration & compatibility work** → This fork
+### This Fork's Contributions 🔧
+
+- PyTorch 2.x compatibility (NATTEN 0.17.5 upgrade)
+- Performance optimizations (model caching, GPU management)
+- Modern packaging and dependency management
+- Enhanced error handling and user experience
+- Source separation via demucs-infer package
+
+### Attribution 📚
+
+- **All-In-One research** → Taejun Kim & Juhan Nam ([original](https://github.com/mir-aidj/all-in-one))
+- **Source separation** → demucs-infer (based on Demucs by Meta AI)
+- **PyTorch 2.x compatibility** → This fork
 
 ### For Researchers
 
-**When using this package, please cite the papers in the [Citation](#citation) section above:**
-- **All-In-One** for the core music structure analysis algorithms
-- **Demucs** for the source separation models
+When using this package, please cite the **All-In-One** paper for music structure analysis.
+See [Citation](#citation) section for BibTeX.
 
 ### Project Information
 

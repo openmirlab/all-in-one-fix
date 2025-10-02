@@ -18,8 +18,10 @@ from pathlib import Path
 from typing import List, Union, Optional, Dict, Callable, Protocol
 from abc import ABC, abstractmethod
 
-# Import integrated separation module
-from .separation import get_model, apply_model, save_audio
+# Import demucs-infer for source separation
+from demucs_infer.pretrained import get_model
+from demucs_infer.apply import apply_model
+from demucs_infer.audio import save_audio
 
 
 class StemSeparator(Protocol):

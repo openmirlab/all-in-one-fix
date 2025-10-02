@@ -1,72 +1,53 @@
-# Integration Documentation: demucsfix → all-in-one-fix
+# Integration Documentation: demucs-infer → all-in-one-fix
 
 ## Overview
 
-This document describes the integration of demucsfix source separation functionality directly into the all-in-one-fix package. This was done to simplify maintenance and reduce external dependencies.
+This document describes how all-in-one-fix uses the demucs-infer package for source separation. Previously, Demucs code was embedded directly in allin1fix. Now it uses demucs-infer as a clean dependency.
 
 **Date**: 2025-01-XX
-**Version**: 2.0.0
-**Merged from**: demucsfix v4.1.0a2
+**Version**: 2.0.1
+**Uses**: demucs-infer v4.1.0
 
 ---
 
 ## 🎯 Goals
 
-1. **Single Package**: Eliminate the external demucsfix dependency
-2. **Easier Maintenance**: Manage one codebase instead of two
+1. **Clean Dependencies**: Use demucs-infer package instead of embedded code
+2. **Easier Maintenance**: Share demucs-infer across multiple packages
 3. **Better Performance**: No subprocess overhead for source separation
 4. **Cleaner API**: Direct function calls instead of CLI subprocess invocations
 
 ---
 
-## 📦 What Was Integrated
+## 📦 How It Works
 
-### Files Copied from demucsfix
+### Using demucs-infer Package
 
-The following files were extracted from demucsfix and integrated into `src/allin1fix/separation/`:
+allin1fix now uses demucs-infer as a clean dependency instead of embedding the code:
 
 ```
-Source (demucsfix/)              →  Destination (all-in-one-fix/)
+Dependencies:
 ─────────────────────────────────────────────────────────────────
-1. pretrained.py      (3.3K)    →  separation/models.py
-2. apply.py          (13K)      →  separation/inference.py
-3. audio.py          (9.5K)     →  separation/audio.py
-4. htdemucs.py       (30K)      →  separation/models/htdemucs.py
-5. hdemucs.py        (30K)      →  separation/models/hdemucs.py
-6. demucs.py         (17K)      →  separation/models/demucs.py
-7. transformer.py    (27K)      →  separation/models/transformer.py
-8. utils.py          (4.5K)     →  separation/utils.py
-9. states.py         (4.8K)     →  separation/core/states.py
-10. spec.py          (1.4K)     →  separation/core/spec.py
-11. repo.py          (5.3K)     →  separation/repo.py
-12. remote/          (configs)  →  separation/remote/
+demucs-infer           →  Inference-only Demucs package
+  ├── pretrained.py    →  Model loading (get_model, list_models)
+  ├── apply.py         →  Model inference (apply_model)
+  ├── audio.py         →  Audio I/O (save_audio, load_audio)
+  └── models/          →  HTDemucs, HDemucs, base Demucs
 
-Total: 11 files + remote configs (~145KB)
+Benefits:
+  - ~4146 lines of code removed from allin1fix
+  - Shared across ecosystem (multistage-drumtrans, worzpro-demo)
+  - Easier maintenance and updates
+  - No code duplication
 ```
 
-### New Module Structure
+### Import Structure
 
-```
-src/allin1fix/
-├── separation/              # NEW: Integrated separation module
-│   ├── __init__.py          # Exports: get_model, apply_model, save_audio
-│   ├── models.py            # Model loading (from pretrained.py)
-│   ├── inference.py         # Model inference (from apply.py)
-│   ├── audio.py             # Audio I/O
-│   ├── utils.py             # Utilities
-│   ├── repo.py              # Model repository management
-│   ├── models/              # Model architectures
-│   │   ├── __init__.py
-│   │   ├── htdemucs.py      # HTDemucs model
-│   │   ├── hdemucs.py       # HDemucs model
-│   │   ├── demucs.py        # Base Demucs
-│   │   └── transformer.py   # Transformer components
-│   ├── core/                # Core utilities
-│   │   ├── __init__.py
-│   │   ├── states.py        # State management
-│   │   └── spec.py          # Spectrogram utilities
-│   └── remote/              # Model references
-└── ... (existing files)
+```python
+# allin1fix uses demucs-infer directly
+from demucs_infer.pretrained import get_model
+from demucs_infer.apply import apply_model
+from demucs_infer.audio import save_audio
 ```
 
 ---
@@ -86,9 +67,11 @@ subprocess.run([
 ], check=True)
 ```
 
-**After** (direct API call):
+**After** (direct API call using demucs-infer):
 ```python
-from .separation import get_model, apply_model, save_audio
+from demucs_infer.pretrained import get_model
+from demucs_infer.apply import apply_model
+from demucs_infer.audio import save_audio
 
 # Load model
 model = get_model(self.model_name)
@@ -129,26 +112,49 @@ y = demucsfix.separate.load_track(result.path, 2, sr).numpy()
 demucsfix.separate.save_audio(wav=..., path=..., samplerate=...)
 ```
 
-**After**:
+**After** (using demucs-infer):
 ```python
-from .separation.audio import save_audio
+from demucs_infer.audio import save_audio
 y, sr = librosa.load(result.path, sr=44100, mono=False)
 save_audio(wav=..., path=..., samplerate=...)
 ```
 
 ---
 
-## 📝 Import Updates
+## 📝 pyproject.toml Changes
 
-All internal imports in the copied files were updated:
+### Dependencies Updated
 
-### In `separation/` root files:
-- `from .hdemucs` → `from .models.hdemucs`
-- `from .htdemucs` → `from .models.htdemucs`
-- `from .demucs` → `from .models.demucs`
-- `from .states` → `from .core.states`
-- `from .spec` → `from .core.spec`
-- `from .apply` → `from .inference`
+**Before** (embedded separation code):
+```toml
+dependencies = [
+  "torch>=2.0.0,<3.0.0",
+  "torchaudio>=2.0.0,<3.0.0",
+  "julius>=0.2.3",
+  "lameenc>=1.2",
+  "diffq>=0.2.1",
+  "einops",
+  "dora-search>=0.1.12",
+  "openunmix",
+  "treetable",
+]
+```
+
+**After** (using demucs-infer):
+```toml
+dependencies = [
+  "demucs-infer",  # Brings: torch, torchaudio, julius, lameenc, diffq, einops, openunmix
+]
+
+[tool.uv.sources]
+demucs-infer = { path = "../demucs-infer" }
+```
+
+**Removed dependencies:**
+- ❌ dora-search (training-only, not needed)
+- ❌ treetable (training-only, not needed)
+- ❌ Direct torch/torchaudio (comes from demucs-infer)
+- ❌ julius, lameenc, diffq, einops, openunmix (comes from demucs-infer)
 
 ### In `separation/models/` files:
 - `from .states` → `from ..core.states`
@@ -183,7 +189,9 @@ All internal imports in the copied files were updated:
 
 ### Basic Import Test:
 ```python
-from allin1fix.separation import get_model, apply_model, save_audio
+from demucs_infer.pretrained import get_model
+from demucs_infer.apply import apply_model
+from demucs_infer.audio import save_audio
 print("✅ Imports work")
 ```
 
@@ -254,7 +262,8 @@ sources = demucsfix.apply.apply_model(model, wav)
 
 **After**:
 ```python
-from allin1fix.separation import get_model, apply_model
+from demucs_infer.pretrained import get_model
+from demucs_infer.apply import apply_model
 model = get_model("htdemucs")
 sources = apply_model(model, wav)
 ```
@@ -288,7 +297,7 @@ uv pip install -e .
 ### Model Loading Issues:
 ```python
 # Check available models
-from allin1fix.separation import list_models
+from demucs_infer.pretrained import list_models
 print(list_models())
 ```
 

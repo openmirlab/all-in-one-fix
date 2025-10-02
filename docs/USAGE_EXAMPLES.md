@@ -83,7 +83,7 @@ print(f"GPU memory freed: {torch.cuda.memory_allocated() / 1e9:.2f} GB")
 ### Example 2.1: Handling Typos
 
 ```python
-from allin1fix.separation import get_model
+from demucs_infer.pretrained import get_model
 
 try:
     model = get_model("htdemux")  # Typo!
@@ -106,7 +106,7 @@ except ValueError as e:
 ### Example 2.2: Discovering Available Models
 
 ```python
-from allin1fix.separation import list_models, get_model
+from demucs_infer.pretrained import list_models, get_model
 
 # List all models
 all_models = list_models()
@@ -127,7 +127,7 @@ print(f"Loaded: {model.sources}")
 
 ```python
 import sys
-from allin1fix.separation import get_model, list_models
+from demucs_infer.pretrained import get_model, list_models
 
 def main():
     if len(sys.argv) < 2:
@@ -439,7 +439,7 @@ async def separate_websocket(websocket: WebSocket):
 from queue import Queue
 from threading import Thread
 from allin1fix.stems import DemucsProvider
-from allin1fix.separation import list_models
+from demucs_infer.pretrained import list_models
 
 class SeparationWorker:
     def __init__(self, model='htdemucs', device='cuda'):

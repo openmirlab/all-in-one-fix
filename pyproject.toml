@@ -5,9 +5,9 @@ build-backend = "hatchling.build"
 [project]
 name = "allin1fix"
 dynamic = ["version"]
-description = "All-In-One Music Structure Analyzer with integrated source separation"
+description = "All-In-One Music Structure Analyzer with source separation"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10,<3.11"
 license = "MIT"
 keywords = ["music", "beat", "downbeat", "tracking", "structure", "analysis", "allin1fix", "source-separation"]
 authors = [
@@ -31,16 +31,8 @@ dependencies = [
   "huggingface_hub",
   "matplotlib",
   "madmom @ git+https://github.com/CPJKU/madmom",
-  # Integrated source separation dependencies (from demucsfix)
-  "torch>=2.0.0,<3.0.0",
-  "torchaudio>=2.0.0,<3.0.0",
-  "julius>=0.2.3",
-  "lameenc>=1.2",
-  "diffq>=0.2.1",
-  "einops",
-  "dora-search>=0.1.12",
-  "openunmix",
-  "treetable",
+  # Source separation (demucs-infer brings: torch, torchaudio, julius, lameenc, diffq, einops, openunmix)
+  "demucs-infer",
 ]
 
 [project.optional-dependencies]
@@ -70,3 +62,6 @@ packages = ["src/allin1fix"]
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[tool.uv.sources]
+demucs-infer = { git = "https://github.com/ChenPaulYu/demucs-infer.git" }

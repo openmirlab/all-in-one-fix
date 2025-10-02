@@ -10,7 +10,7 @@ from tqdm import tqdm
 from numpy.typing import NDArray
 from .typings import AnalysisResult, PathLike, Segment
 from .utils import mkpath
-from .separation.audio import save_audio
+from demucs_infer.audio import save_audio
 
 
 def sonify(

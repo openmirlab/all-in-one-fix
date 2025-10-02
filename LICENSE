@@ -5,10 +5,7 @@ This package includes code from multiple sources:
 1. All-In-One (https://github.com/mir-aidj/all-in-one)
    Copyright (c) 2023 Taejun Kim
 
-2. Demucs (https://github.com/facebookresearch/demucs)
-   Copyright (c) Meta Platforms, Inc. and affiliates
-
-3. Integration and Modifications
+2. Integration and Modifications
    Copyright (c) 2025 Bo-Yu Chen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
