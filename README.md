@@ -924,13 +924,26 @@ dependencies = ["natten==0.17.5"]  # Demucs integrated, no external dependency!
 Please refer to [TRAINING.md](docs/TRAINING.md).
 
 ## Citation
-If you use this package for your research, please cite the following paper:
+
+If you use this package for your research, please cite the following papers:
+
+**All-In-One (core music structure analysis algorithms):**
 ```bibtex
 @inproceedings{taejun2023allinone,
   title={All-In-One Metrical And Functional Structure Analysis With Neighborhood Attentions on Demixed Audio},
   author={Kim, Taejun and Nam, Juhan},
   booktitle={IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA)},
   year={2023}
+}
+```
+
+**Demucs (source separation models):**
+```bibtex
+@inproceedings{defossez2021hybrid,
+  title={Hybrid Spectrogram and Waveform Source Separation},
+  author={Défossez, Alexandre},
+  booktitle={Proceedings of the ISMIR 2021 Workshop on Music Source Separation},
+  year={2021}
 }
 ```
 
@@ -967,18 +980,9 @@ All-In-One-Fix (v2.0.0) is a unified package that combines:
 
 ### For Researchers
 
-**When using this package, please cite:**
-
-1. **All-In-One (core algorithms)** - the paper above
-2. **Demucs (if using source separation)**:
-   ```bibtex
-   @inproceedings{defossez2021hybrid,
-     title={Hybrid Spectrogram and Waveform Source Separation},
-     author={Défossez, Alexandre},
-     booktitle={Proceedings of the ISMIR 2021 Workshop on Music Source Separation},
-     year={2021}
-   }
-   ```
+**When using this package, please cite the papers in the [Citation](#citation) section above:**
+- **All-In-One** for the core music structure analysis algorithms
+- **Demucs** for the source separation models
 
 ### Project Information
 
