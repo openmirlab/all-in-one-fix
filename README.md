@@ -7,11 +7,9 @@
 
 > **🙏 Acknowledgments**:
 >
-> This package builds upon the exceptional work of two foundational projects:
+> This package builds upon the exceptional work of the foundational project:
 >
 > - **[All-In-One](https://github.com/mir-aidj/all-in-one)** by [Taejun Kim](https://taejun.kim/) and Juhan Nam - The core music structure analysis algorithms and models. We are deeply grateful for their groundbreaking research in music information retrieval.
->
-> - **[Demucs](https://github.com/facebookresearch/demucs)** by Meta AI Research (v4.1.0a2) - The source separation models (HTDemucs) that enable stem-based analysis. We acknowledge Meta Platforms, Inc. for their excellent work in audio source separation.
 >
 > This enhanced version preserves all original research contributions while improving compatibility and workflow flexibility. All credit for the core algorithms belongs to the original authors.
 
@@ -226,7 +224,7 @@ This project integrates two foundational open-source projects:
 
 **Credit:**
 - **All-In-One research** → Taejun Kim & Juhan Nam ([original paper](https://github.com/mir-aidj/all-in-one))
-- **Source separation** → demucs-infer package (based on Demucs by Meta AI Research)
+- **Source separation** → demucs-infer package (openmirlab/demucs-infer)
 - **This fork** → PyTorch 2.x compatibility, performance improvements, modern tooling
 
 ## Installation
@@ -1079,7 +1077,7 @@ All-In-One-Fix (v2.0.0) is a unified package that combines:
 ### Attribution 📚
 
 - **All-In-One research** → Taejun Kim & Juhan Nam ([original](https://github.com/mir-aidj/all-in-one))
-- **Source separation** → demucs-infer (based on Demucs by Meta AI)
+- **Source separation** → demucs-infer (openmirlab/demucs-infer)
 - **PyTorch 2.x compatibility** → This fork
 
 ### For Researchers
