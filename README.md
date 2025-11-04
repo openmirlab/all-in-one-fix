@@ -34,6 +34,7 @@ This package provides models for music structure analysis, predicting:
 - **NATTEN 0.17.x Verified**: Fully tested and working with PyTorch 2.0-2.7+
   - Automatic version detection supports NATTEN 0.17.x-0.19.x
   - Extensively tested with real music analysis workloads
+  - **Note**: NATTEN 0.20+ (including 0.21.0) is not compatible due to API changes requiring dimensional validation updates
 - **Unified Package**: Single package with all functionality included
 - **Modern Packaging**: UV-style packaging with full pip compatibility
 
