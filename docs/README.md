@@ -12,19 +12,26 @@ This directory contains detailed documentation for the All-In-One-Fix package.
   - Custom separation models
   - Performance optimization tips
 
-### Development & Integration
+### Project Documentation
 
-- **[INTEGRATION.md](INTEGRATION.md)** - Details about the Demucs integration
-  - What was integrated and why
-  - File structure and dependencies
-  - Integration process documentation
-  - Backward compatibility notes
+- **[RELEASE_SUMMARY.md](RELEASE_SUMMARY.md)** - Complete v2.0.0+ release summary
+  - Package publishing configuration
+  - Repository migration details
+  - NATTEN 0.21.0 support documentation
+  - Installation methods and compatibility
+  - All commits and changes explained
 
-- **[IMPROVEMENTS.md](IMPROVEMENTS.md)** - Performance improvements in v2.0.0
-  - Model caching implementation
-  - GPU memory management
-  - Error handling enhancements
-  - Progress callback system
+- **[PACKAGE_STRUCTURE.md](PACKAGE_STRUCTURE.md)** - Technical package structure
+  - Package metadata and configuration
+  - Dependency management details
+  - Publishing readiness checklist
+  - Comparison with demucs-infer pattern
+
+- **[NATTEN_COMPATIBILITY_TEST.md](NATTEN_COMPATIBILITY_TEST.md)** - NATTEN compatibility verification
+  - Test methodology and results
+  - Three-tier compatibility system explanation
+  - Supported NATTEN versions (0.17.5-0.21.0+)
+  - Installation verification guide
 
 ### Training & Research
 
@@ -55,9 +62,10 @@ This directory contains detailed documentation for the All-In-One-Fix package.
 If you're new to All-In-One-Fix:
 1. Start with the [Main README](../README.md) for installation and basic usage
 2. Check [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md) for practical examples
-3. Review [IMPROVEMENTS.md](IMPROVEMENTS.md) to understand v2.0.0 enhancements
+3. Review [RELEASE_SUMMARY.md](RELEASE_SUMMARY.md) to understand v2.0.0+ changes
 
-For contributors:
-1. Review [INTEGRATION.md](INTEGRATION.md) to understand the architecture
-2. Check [IMPROVEMENTS.md](IMPROVEMENTS.md) for implementation details
-3. See [CHANGELOG.md](CHANGELOG.md) for version history
+For contributors and developers:
+1. Review [RELEASE_SUMMARY.md](RELEASE_SUMMARY.md) for complete change history
+2. Check [PACKAGE_STRUCTURE.md](PACKAGE_STRUCTURE.md) for technical details
+3. See [NATTEN_COMPATIBILITY_TEST.md](NATTEN_COMPATIBILITY_TEST.md) for compatibility info
+4. Reference [CHANGELOG.md](CHANGELOG.md) for version history
