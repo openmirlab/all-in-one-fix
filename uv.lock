@@ -89,7 +89,7 @@ train = [
 
 [package.metadata]
 requires-dist = [
-    { name = "demucs-infer", directory = "../demucs-infer" },
+    { name = "demucs-infer", git = "https://github.com/ChenPaulYu/demucs-infer.git" },
     { name = "huggingface-hub" },
     { name = "hydra-core" },
     { name = "librosa" },
@@ -268,7 +268,7 @@ wheels = [
 [[package]]
 name = "demucs-infer"
 version = "4.1.0"
-source = { directory = "../demucs-infer" }
+source = { git = "https://github.com/ChenPaulYu/demucs-infer.git#ebb6139ed5b66e67c09eb380ac6da6989f9b4875" }
 dependencies = [
     { name = "einops" },
     { name = "julius" },
@@ -278,22 +278,6 @@ dependencies = [
     { name = "torchaudio" },
     { name = "tqdm" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "diffq", marker = "extra == 'quantized'", specifier = ">=0.2.1" },
-    { name = "einops" },
-    { name = "julius", specifier = ">=0.2.3" },
-    { name = "lameenc", marker = "extra == 'mp3'", specifier = ">=1.2" },
-    { name = "openunmix" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0.0" },
-    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0.0" },
-    { name = "pyyaml" },
-    { name = "torch", specifier = ">=2.0.0" },
-    { name = "torchaudio", specifier = ">=2.0.0" },
-    { name = "tqdm" },
-]
-provides-extras = ["mp3", "quantized", "dev"]
 
 [[package]]
 name = "einops"
