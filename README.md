@@ -84,11 +84,11 @@ This package provides models for music structure analysis, predicting:
 The original **All-In-One** package is an excellent music structure analysis tool, but needed updates for modern PyTorch environments:
 
 1. **PyTorch 2.x Compatibility**: NATTEN library needed upgrade for PyTorch 2.x
-2. **Source Separation**: Required external Demucs (no longer maintained)
+2. **Source Separation**: Required separate source separation setup
 3. **Performance**: No model caching, repeated model loading
 4. **Modern Tooling**: Packaging and dependency management improvements
 
-> **Note**: The original Demucs is no longer actively maintained by Meta AI Research. This fork uses **demucs-infer**, a maintained inference-only version with PyTorch 2.x support.
+> **Note**: This fork uses **demucs-infer**, a maintained inference-only package with PyTorch 2.x support for source separation.
 
 ### What Changed in v2.0.0?
 
@@ -205,7 +205,7 @@ This project integrates two foundational open-source projects:
 
 **Original Projects:**
 - **[All-In-One](https://github.com/mir-aidj/all-in-one)** - Music structure analysis by Taejun Kim & Juhan Nam
-- **[Demucs](https://github.com/facebookresearch/demucs)** - Source separation by Meta AI Research
+- **[demucs-infer](https://github.com/openmirlab/demucs-infer)** - Source separation package (PyTorch 2.x compatible)
 
 **What's New in v2.0.0:**
 - ✅ NATTEN 0.17.5 for PyTorch 2.x compatibility
@@ -1052,8 +1052,8 @@ If you use this package for your research, please cite the following papers:
 
 All-In-One-Fix (v2.0.0) is a unified package that combines:
 - **Music structure analysis** from [All-In-One](https://github.com/mir-aidj/all-in-one) by Taejun Kim & Juhan Nam
-- **Source separation** from [Demucs](https://github.com/facebookresearch/demucs) v4.1.0a2 by Meta AI Research
-- **NATTEN 0.17.5 upgrade** and modern PyTorch 2.x compatibility improvements
+- **Source separation** via [demucs-infer](https://github.com/openmirlab/demucs-infer) package
+- **NATTEN 0.17.5-0.21.0+ support** with modern PyTorch 2.x compatibility
 - **Performance improvements** and integration work
 
 ### Key Principles
