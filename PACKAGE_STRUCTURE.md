@@ -35,7 +35,7 @@ Following the demucs-infer pattern:
 - `madmom @ git+https://github.com/CPJKU/madmom`
 
 **Core dependencies from PyPI:**
-- `natten==0.17.5` (for PyTorch 2.x compatibility)
+- `natten>=0.17.5` (flexible: 0.17.5-0.21.0+ for PyTorch 2.0-2.7.0)
 - `numpy`, `librosa`, `hydra-core`, `omegaconf`, `huggingface_hub`, `matplotlib`
 
 **Optional dependencies:**
@@ -125,13 +125,22 @@ all-in-one-fix/
 3. **Dependency Management**
    - demucs-infer from GitHub (PyTorch 2.x compatible)
    - madmom from GitHub (latest version)
-   - NATTEN 0.17.5 for PyTorch 2.x
+   - NATTEN 0.17.5-0.21.0+ flexible support (automatic version detection)
+   - PyTorch 2.0-2.7.0 compatibility
+   - CUDA 11.7-12.8 support
    - Clean separation of core vs optional dependencies
 
 4. **Development Tools**
    - Optional dev dependencies (black, ruff)
    - Optional training dependencies
    - Editable install support
+
+5. **NATTEN Compatibility Layer**
+   - Automatic detection of NATTEN version (0.17.5-0.21.0+)
+   - Three-tier compatibility system:
+     - NATTEN <0.19: Short names (`na1d_av`, `na2d_av`)
+     - NATTEN 0.19: Long names (`natten1dav`, `natten2dav`)
+     - NATTEN >=0.20: Modern generic API with wrappers
 
 ## Comparison with demucs-infer Pattern
 

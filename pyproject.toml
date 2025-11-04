@@ -33,7 +33,7 @@ classifiers = [
 dependencies = [
   "numpy",
   "librosa",
-  "natten==0.17.5",
+  "natten>=0.17.5",  # Supports 0.17.5 (PyTorch 2.0+) through 0.21.0+ (PyTorch 2.7.0+)
   "hydra-core",
   "omegaconf",
   "huggingface_hub",

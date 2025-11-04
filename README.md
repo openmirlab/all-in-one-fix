@@ -33,8 +33,10 @@ This package provides models for music structure analysis, predicting:
 - **Better Error Messages**: Fuzzy matching suggestions for model names
 
 ### 🔧 **Enhanced Compatibility**
-- **PyTorch 2.x Support**: Built compatibility for PyTorch 2.7+ and modern CUDA versions
-- **NATTEN 0.17.5**: Upgraded from 0.15.0 to work with modern PyTorch
+- **PyTorch 2.x Support**: Compatible with PyTorch 2.0 through 2.7.0 and CUDA 11.7-12.8
+- **NATTEN 0.17.5-0.21.0+**: Flexible NATTEN support with automatic version detection
+  - NATTEN 0.17.5 for PyTorch 2.0-2.6
+  - NATTEN 0.21.0 for PyTorch 2.7.0 (latest)
 - **Unified Package**: Single package with all functionality included
 - **Modern Packaging**: UV-style packaging with full pip compatibility
 
@@ -105,16 +107,21 @@ dependencies = ["natten>=0.15.0"]
 
 **After:**
 ```toml
-# Upgraded to NATTEN 0.17.5 for PyTorch 2.x compatibility
-dependencies = ["natten==0.17.5"]
+# Flexible NATTEN support: 0.17.5 through 0.21.0+
+dependencies = ["natten>=0.17.5"]  # Supports PyTorch 2.0-2.7.0
 ```
 
 **Changes Made:**
-- Upgraded NATTEN dependency from 0.15.0 to 0.17.5
-- Tested compatibility with PyTorch 2.7+ and CUDA 12.x
-- Ensures All-In-One models work with modern PyTorch ecosystem
+- Upgraded NATTEN dependency from 0.15.0 to 0.17.5+ (flexible)
+- Added automatic version detection for NATTEN 0.17.5-0.21.0+
+- Code automatically adapts to installed NATTEN version
+- Tested with PyTorch 2.0-2.7.0 and CUDA 11.7-12.8
 
-**Impact:** All-In-One models now work seamlessly with PyTorch 2.x
+**NATTEN Version Support:**
+- **NATTEN 0.17.5**: PyTorch 2.0-2.6, CUDA 11.7-12.1
+- **NATTEN 0.21.0**: PyTorch 2.7.0, CUDA 12.8
+
+**Impact:** All-In-One models work with both legacy and latest PyTorch versions
 
 #### **2. Streamlined Source Separation** 🎵
 
@@ -227,32 +234,66 @@ This project integrates two foundational open-source projects:
 
 ### Requirements
 - **Python**: 3.10
-- **PyTorch**: 2.0+ (tested with 2.7+)
+- **PyTorch**: 2.0+ (tested up to 2.7.0)
+- **NATTEN**: 0.17.5+ (supports up to 0.21.0+)
 - **GPU**: CUDA-capable GPU recommended (CPU supported)
 
 allin1fix supports both **UV** (recommended, faster) and **pip** (traditional) installation methods.
+
+> **💡 NATTEN Version Compatibility:**
+> - **NATTEN 0.17.5**: Works with PyTorch 2.0-2.6, CUDA 11.7-12.1
+> - **NATTEN 0.21.0**: Works with PyTorch 2.7.0, CUDA 12.8
+>
+> The code automatically adapts to your NATTEN version (0.17.5 through 0.21.0+).
 
 ### Option 1: UV (Recommended) ⚡
 
 [UV](https://github.com/astral-sh/uv) is a blazing-fast Python package installer and resolver.
 
+#### Standard Installation (NATTEN 0.17.5, PyTorch 2.0-2.6)
+
 ```bash
 # Install UV if you haven't already
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install PyTorch first (adjust CUDA version as needed)
+# Install PyTorch (example: CUDA 12.1)
 uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# Install NATTEN 0.17.5
+uv pip install natten==0.17.5
 
 # Install from GitHub
 uv pip install git+https://github.com/openmirlab/all-in-one-fix.git
 
-# Or install from local directory (for development)
-git clone https://github.com/openmirlab/all-in-one-fix.git
-cd all-in-one-fix
-uv pip install -e .
+# Run the CLI
+uv run allin1fix your_audio_file.wav
+```
+
+#### Latest Version (NATTEN 0.21.0, PyTorch 2.7.0, CUDA 12.8)
+
+```bash
+# Install UV if you haven't already
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install PyTorch 2.7.0 with CUDA 12.8
+uv pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0
+
+# Install NATTEN 0.21.0 from whl.natten.org
+uv pip install natten==0.21.0+torch270cu128 -f https://whl.natten.org
+
+# Install from GitHub
+uv pip install git+https://github.com/openmirlab/all-in-one-fix.git
 
 # Run the CLI
 uv run allin1fix your_audio_file.wav
+```
+
+#### Development Installation
+
+```bash
+git clone https://github.com/openmirlab/all-in-one-fix.git
+cd all-in-one-fix
+uv pip install -e .
 ```
 
 **Benefits of UV:**
@@ -263,20 +304,41 @@ uv run allin1fix your_audio_file.wav
 
 ### Option 2: pip (Traditional)
 
+#### Standard Installation (NATTEN 0.17.5, PyTorch 2.0-2.6)
+
 ```bash
-# Install PyTorch first (adjust CUDA version as needed)
+# Install PyTorch (example: CUDA 12.1)
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# Install NATTEN 0.17.5
+pip install natten==0.17.5
 
 # Install from GitHub
 pip install git+https://github.com/openmirlab/all-in-one-fix.git
+```
 
-# Or install from local directory (for development)
+#### Latest Version (NATTEN 0.21.0, PyTorch 2.7.0, CUDA 12.8)
+
+```bash
+# Install PyTorch 2.7.0 with CUDA 12.8
+pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0
+
+# Install NATTEN 0.21.0 from whl.natten.org
+pip install natten==0.21.0+torch270cu128 -f https://whl.natten.org
+
+# Install from GitHub
+pip install git+https://github.com/openmirlab/all-in-one-fix.git
+```
+
+#### Development Installation
+
+```bash
 git clone https://github.com/openmirlab/all-in-one-fix.git
 cd all-in-one-fix
 pip install -e .
 ```
 
-**Note:** All dependencies (including **demucs-infer** and **madmom**) will be installed automatically from GitHub. NATTEN 0.17.5 will be installed from PyPI.
+**Note:** All dependencies (including **demucs-infer** and **madmom**) will be installed automatically from GitHub. You must install PyTorch and NATTEN separately before installing allin1fix.
 
 ### (Optional) Install FFmpeg for MP3 support
 
@@ -948,7 +1010,9 @@ pip install -e .
 - ✅ All visualization and sonification features
 
 ### **What's Enhanced**
-- 🆕 Modern PyTorch 2.x support (NATTEN 0.15.0 → 0.17.5 upgrade)
+- 🆕 Modern PyTorch 2.x support (NATTEN 0.15.0 → 0.17.5-0.21.0+ flexible support)
+- 🆕 Automatic NATTEN version detection (supports 0.17.5 through 0.21.0+)
+- 🆕 PyTorch 2.0-2.7.0 and CUDA 11.7-12.8 compatibility
 - 🆕 Uses demucs-infer package for PyTorch 2.x compatible separation
 - 🆕 Clean dependency management via demucs-infer
 - 🆕 Flexible source separation options
