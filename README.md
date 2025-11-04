@@ -244,10 +244,10 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 
 # Install from GitHub
-uv pip install git+https://github.com/ChenPaulYu/all-in-one-fix.git
+uv pip install git+https://github.com/openmirlab/all-in-one-fix.git
 
 # Or install from local directory (for development)
-git clone https://github.com/ChenPaulYu/all-in-one-fix.git
+git clone https://github.com/openmirlab/all-in-one-fix.git
 cd all-in-one-fix
 uv pip install -e .
 
@@ -268,10 +268,10 @@ uv run allin1fix your_audio_file.wav
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 
 # Install from GitHub
-pip install git+https://github.com/ChenPaulYu/all-in-one-fix.git
+pip install git+https://github.com/openmirlab/all-in-one-fix.git
 
 # Or install from local directory (for development)
-git clone https://github.com/ChenPaulYu/all-in-one-fix.git
+git clone https://github.com/openmirlab/all-in-one-fix.git
 cd all-in-one-fix
 pip install -e .
 ```
@@ -925,13 +925,13 @@ All-In-One-Fix supports both **UV** (recommended, faster) and **pip** (tradition
 
 ```bash
 # With UV (recommended, faster dependency resolution)
-uv pip install git+https://github.com/ChenPaulYu/all-in-one-fix.git
+uv pip install git+https://github.com/openmirlab/all-in-one-fix.git
 
 # With traditional pip (still fully supported)
-pip install git+https://github.com/ChenPaulYu/all-in-one-fix.git
+pip install git+https://github.com/openmirlab/all-in-one-fix.git
 
 # Editable install for development (works with both)
-git clone https://github.com/ChenPaulYu/all-in-one-fix.git
+git clone https://github.com/openmirlab/all-in-one-fix.git
 cd all-in-one-fix
 uv pip install -e .
 # or

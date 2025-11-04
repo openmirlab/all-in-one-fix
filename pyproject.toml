@@ -63,12 +63,12 @@ allin1fix-train = "allin1fix.training.train:main"
 allin1fix-preprocess = "allin1fix.training.preprocess:main"
 
 [project.urls]
-Homepage = "https://github.com/ChenPaulYu/all-in-one-fix"
-Repository = "https://github.com/ChenPaulYu/all-in-one-fix"
-Documentation = "https://github.com/ChenPaulYu/all-in-one-fix#readme"
-"Bug Reports" = "https://github.com/ChenPaulYu/all-in-one-fix/issues"
+Homepage = "https://github.com/openmirlab/all-in-one-fix"
+Repository = "https://github.com/openmirlab/all-in-one-fix"
+Documentation = "https://github.com/openmirlab/all-in-one-fix#readme"
+"Bug Reports" = "https://github.com/openmirlab/all-in-one-fix/issues"
 "Original All-In-One" = "https://github.com/mir-aidj/all-in-one"
-Changelog = "https://github.com/ChenPaulYu/all-in-one-fix/blob/main/docs/CHANGELOG.md"
+Changelog = "https://github.com/openmirlab/all-in-one-fix/blob/main/docs/CHANGELOG.md"
 
 [tool.hatch.version]
 path = "src/allin1fix/__about__.py"

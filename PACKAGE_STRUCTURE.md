@@ -59,10 +59,10 @@ Changelog = "https://github.com/ChenPaulYu/all-in-one-fix/blob/main/docs/CHANGEL
 ### Option 1: UV (Recommended)
 ```bash
 # Install from GitHub
-uv pip install git+https://github.com/ChenPaulYu/all-in-one-fix.git
+uv pip install git+https://github.com/openmirlab/all-in-one-fix.git
 
 # Editable install for development
-git clone https://github.com/ChenPaulYu/all-in-one-fix.git
+git clone https://github.com/openmirlab/all-in-one-fix.git
 cd all-in-one-fix
 uv pip install -e .
 ```
@@ -70,10 +70,10 @@ uv pip install -e .
 ### Option 2: pip (Traditional)
 ```bash
 # Install from GitHub
-pip install git+https://github.com/ChenPaulYu/all-in-one-fix.git
+pip install git+https://github.com/openmirlab/all-in-one-fix.git
 
 # Editable install for development
-git clone https://github.com/ChenPaulYu/all-in-one-fix.git
+git clone https://github.com/openmirlab/all-in-one-fix.git
 cd all-in-one-fix
 pip install -e .
 ```
