@@ -8,20 +8,28 @@ dynamic = ["version"]
 description = "All-In-One Music Structure Analyzer with source separation"
 readme = "README.md"
 requires-python = ">=3.10,<3.11"
-license = "MIT"
-keywords = ["music", "beat", "downbeat", "tracking", "structure", "analysis", "allin1fix", "source-separation"]
+license = {text = "MIT"}
+# Note: license-files automatically includes LICENSE by default
 authors = [
   { name = "Taejun Kim", email = "taejun@kaist.ac.kr" },
 ]
+maintainers = [
+  { name = "worzpro Development Team" },
+]
+keywords = ["music", "beat", "downbeat", "tracking", "structure", "analysis", "allin1fix", "source-separation"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.9",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: Implementation :: CPython",
-  "Programming Language :: Python :: Implementation :: PyPy",
+  "Topic :: Multimedia :: Sound/Audio",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
+
+# Core dependencies
 dependencies = [
   "numpy",
   "librosa",
@@ -32,7 +40,7 @@ dependencies = [
   "matplotlib",
   "madmom @ git+https://github.com/CPJKU/madmom",
   # Source separation (demucs-infer brings: torch, torchaudio, julius, lameenc, diffq, einops, openunmix)
-  "demucs-infer",
+  "demucs-infer @ git+https://github.com/openmirlab/demucs-infer.git",
 ]
 
 [project.optional-dependencies]
@@ -43,16 +51,24 @@ train = [
   "mir_eval",
   "numpy<1.24", # otherwise, mir_eval will raise AttributeError: module 'numpy' has no attribute 'int'
 ]
-
-[project.urls]
-Documentation = "https://github.com/ChenPaulYu/all-in-one-fix#readme"
-Issues = "https://github.com/ChenPaulYu/all-in-one-fix/issues"
-Source = "https://github.com/ChenPaulYu/all-in-one-fix"
+# Development dependencies
+dev = [
+  "black",
+  "ruff",
+]
 
 [project.scripts]
 allin1fix = "allin1fix.cli:main"
 allin1fix-train = "allin1fix.training.train:main"
 allin1fix-preprocess = "allin1fix.training.preprocess:main"
+
+[project.urls]
+Homepage = "https://github.com/ChenPaulYu/all-in-one-fix"
+Repository = "https://github.com/ChenPaulYu/all-in-one-fix"
+Documentation = "https://github.com/ChenPaulYu/all-in-one-fix#readme"
+"Bug Reports" = "https://github.com/ChenPaulYu/all-in-one-fix/issues"
+"Original All-In-One" = "https://github.com/mir-aidj/all-in-one"
+Changelog = "https://github.com/ChenPaulYu/all-in-one-fix/blob/main/docs/CHANGELOG.md"
 
 [tool.hatch.version]
 path = "src/allin1fix/__about__.py"
@@ -60,8 +76,8 @@ path = "src/allin1fix/__about__.py"
 [tool.hatch.build.targets.wheel]
 packages = ["src/allin1fix"]
 
+[tool.hatch.build.targets.sdist]
+packages = ["src/allin1fix"]
+
 [tool.hatch.metadata]
 allow-direct-references = true
-
-[tool.uv.sources]
-demucs-infer = { git = "https://github.com/ChenPaulYu/demucs-infer.git" }

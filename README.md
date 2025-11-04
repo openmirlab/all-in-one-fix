@@ -230,45 +230,57 @@ This project integrates two foundational open-source projects:
 - **PyTorch**: 2.0+ (tested with 2.7+)
 - **GPU**: CUDA-capable GPU recommended (CPU supported)
 
-### 1. Install PyTorch
+allin1fix supports both **UV** (recommended, faster) and **pip** (traditional) installation methods.
 
-Visit [PyTorch](https://pytorch.org/) and install PyTorch 2.0 or later for your system:
-```shell
-# Example for CUDA 12.1 (adjust for your CUDA version)
+### Option 1: UV (Recommended) ⚡
+
+[UV](https://github.com/astral-sh/uv) is a blazing-fast Python package installer and resolver.
+
+```bash
+# Install UV if you haven't already
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install PyTorch first (adjust CUDA version as needed)
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# Install from GitHub
+uv pip install git+https://github.com/ChenPaulYu/all-in-one-fix.git
+
+# Or install from local directory (for development)
+git clone https://github.com/ChenPaulYu/all-in-one-fix.git
+cd all-in-one-fix
+uv pip install -e .
+
+# Run the CLI
+uv run allin1fix your_audio_file.wav
+```
+
+**Benefits of UV:**
+- ⚡ 10-100x faster than pip
+- 🔒 Automatic virtual environment management
+- 📦 Consistent dependency resolution
+- 🎯 Works seamlessly with GitHub dependencies
+
+### Option 2: pip (Traditional)
+
+```bash
+# Install PyTorch first (adjust CUDA version as needed)
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-```
 
-### 2. Install Dependencies
+# Install from GitHub
+pip install git+https://github.com/ChenPaulYu/all-in-one-fix.git
 
-```shell
-# Install madmom from GitHub (required for beat tracking preprocessing)
-pip install git+https://github.com/CPJKU/madmom
-
-# Install demucs-infer from GitHub (required for source separation)
-pip install git+https://github.com/ChenPaulYu/demucs-infer.git
-```
-
-**Note:** As of v2.0.0, Demucs source separation is integrated via **demucs-infer** package - a maintained, PyTorch 2.x compatible inference-only version of Demucs.
-
-### 3. Install All-In-One-Fix
-
-**From source (recommended):**
-```shell
+# Or install from local directory (for development)
 git clone https://github.com/ChenPaulYu/all-in-one-fix.git
 cd all-in-one-fix
 pip install -e .
 ```
 
-**Direct installation:**
-```shell
-pip install /path/to/all-in-one-fix
-```
+**Note:** All dependencies (including **demucs-infer** and **madmom**) will be installed automatically from GitHub. NATTEN 0.17.5 will be installed from PyPI.
 
-**Note**: NATTEN 0.17.5 will be installed automatically as a dependency.
+### (Optional) Install FFmpeg for MP3 support
 
-### 4. (Optional) Install FFmpeg for MP3 support
-
-For ubuntu:
+For Ubuntu:
 
 ```shell
 sudo apt install ffmpeg
@@ -913,17 +925,20 @@ All-In-One-Fix supports both **UV** (recommended, faster) and **pip** (tradition
 
 ```bash
 # With UV (recommended, faster dependency resolution)
-uv pip install allin1fix
+uv pip install git+https://github.com/ChenPaulYu/all-in-one-fix.git
 
 # With traditional pip (still fully supported)
-pip install allin1fix
+pip install git+https://github.com/ChenPaulYu/all-in-one-fix.git
 
 # Editable install for development (works with both)
+git clone https://github.com/ChenPaulYu/all-in-one-fix.git
+cd all-in-one-fix
 uv pip install -e .
+# or
 pip install -e .
 ```
 
-**Note**: The package uses modern `pyproject.toml` with [hatchling](https://github.com/pypa/hatch) backend, following [PEP 621](https://peps.python.org/pep-0621/) standards.
+**Note**: The package uses modern `pyproject.toml` with [hatchling](https://github.com/pypa/hatch) backend, following [PEP 621](https://peps.python.org/pep-0621/) standards. Dependencies are automatically installed from GitHub (demucs-infer, madmom) and PyPI (other packages).
 
 ### **What Stays the Same**
 - ✅ All analysis results format (JSON structure unchanged)
