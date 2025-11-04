@@ -6,65 +6,21 @@
 import math
 import torch
 from abc import ABC,  abstractmethod
-from typing import Optional, Tuple, Callable
-# from natten.functional import natten1dav, natten1dqkrpb, natten2dav, natten2dqkrpb
-# from natten.functional import na1d_av, na1d_qk, na2d_av, na2d_qk
+from typing import Optional, Tuple
 
-try:  # ── 1. "Short" names (was before ~0.19)
+# NATTEN compatibility: Support versions 0.17.x to 0.19.x
+# Note: NATTEN >=0.20 requires additional wrapper updates (not yet implemented)
+try:
+    # Try short names first (NATTEN <0.19)
     from natten.functional import na1d_av, na1d_qk, na2d_av, na2d_qk
 except ImportError:
-    try:  # ── 2. "Long" names (remained as alias)
-        from natten.functional import (
-            natten1dav as na1d_av,
-            natten1dqkrpb as na1d_qk,
-            natten2dav as na2d_av,
-            natten2dqkrpb as na2d_qk,
-        )
-    except ImportError:
-        # ── 3. Modern >=0.20: Building wrappers based on generic functions
-        from natten.functional import neighborhood_attention_generic as _na_generic
-
-        def wrap_qk(dim: int) -> Callable:
-            """(factory: creates a q-k function for 1-D or 2-D"""
-            def _fn(q, k, kernel, dilation, *, rpb=None):
-                ks = kernel if dim == 2 else int(kernel)          # (k,k)  или  k
-                dil = (dilation, dilation) if dim == 2 else int(dilation)
-                return _na_generic(
-                    q,                # query
-                    k,                # key  (we will pass the value further by the same function)
-                    k,                # dummy value – we only need weight
-                    kernel_size=ks,
-                    dilation=dil,
-                    is_causal=False,
-                    scale=None,
-                    # pass rpb if specified (in >=0.20 this is supported)
-                    attention_kwargs=dict(rpb=rpb) if rpb is not None else None,
-                )
-            return _fn
-
-        def _wrap_av(dim: int) -> Callable:
-            """factory: creates a function attn-prob × value"""
-            def _fn(attn, v, kernel, dilation):
-                ks = kernel if dim == 2 else int(kernel)
-                dil = (dilation, dilation) if dim == 2 else int(dilation)
-                # we call generic again, but with ready scales
-                return _na_generic(
-                    attn,            # «query» ← на самом деле уже prob
-                    v,               # key
-                    v,               # value
-                    kernel_size=ks,
-                    dilation=dil,
-                    is_causal=False,
-                    scale=None,
-                )
-            return _fn
-
-        # create final aliases
-        na1d_qk = _wrap_qk(dim=1)
-        na1d_av = _wrap_av(dim=1)
-        na2d_qk = _wrap_qk(dim=2)
-        na2d_av = _wrap_av(dim=2)
-        
+    # Fall back to long names (NATTEN 0.19.x)
+    from natten.functional import (
+        natten1dav as na1d_av,
+        natten1dqkrpb as na1d_qk,
+        natten2dav as na2d_av,
+        natten2dqkrpb as na2d_qk,
+    )
 
 
 from ..config import Config

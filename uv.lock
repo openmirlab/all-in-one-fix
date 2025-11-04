@@ -102,7 +102,7 @@ requires-dist = [
     { name = "madmom", git = "https://github.com/CPJKU/madmom" },
     { name = "matplotlib" },
     { name = "mir-eval", marker = "extra == 'train'" },
-    { name = "natten", specifier = ">=0.17.5" },
+    { name = "natten", specifier = ">=0.17.5,<0.20" },
     { name = "numpy" },
     { name = "numpy", marker = "extra == 'train'", specifier = "<1.24" },
     { name = "omegaconf" },

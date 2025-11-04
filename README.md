@@ -30,10 +30,10 @@ This package provides models for music structure analysis, predicting:
 - **Better Error Messages**: Fuzzy matching suggestions for model names
 
 ### 🔧 **Enhanced Compatibility**
-- **PyTorch 2.x Support**: Compatible with PyTorch 2.0 through 2.7.0 and CUDA 11.7-12.8
-- **NATTEN 0.17.5-0.21.0+**: Flexible NATTEN support with automatic version detection
-  - NATTEN 0.17.5 for PyTorch 2.0-2.6
-  - NATTEN 0.21.0 for PyTorch 2.7.0 (latest)
+- **PyTorch 2.x Support**: Compatible with PyTorch 2.0 through 2.7+ and CUDA 11.7-12.8
+- **NATTEN 0.17.x Verified**: Fully tested and working with PyTorch 2.0-2.7+
+  - Automatic version detection supports NATTEN 0.17.x-0.19.x
+  - Extensively tested with real music analysis workloads
 - **Unified Package**: Single package with all functionality included
 - **Modern Packaging**: UV-style packaging with full pip compatibility
 

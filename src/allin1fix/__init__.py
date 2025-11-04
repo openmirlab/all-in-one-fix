@@ -1,3 +1,5 @@
+__version__ = "2.0.0"
+
 from .analyze import analyze
 from .visualize import visualize
 from .sonify import sonify
@@ -5,9 +7,9 @@ from .typings import AnalysisResult
 from .config import HARMONIX_LABELS
 from .utils import load_result
 from .stems import (
-    StemProvider, 
-    DemucsProvider, 
-    PrecomputedStemProvider, 
+    StemProvider,
+    DemucsProvider,
+    PrecomputedStemProvider,
     CustomSeparatorProvider,
     get_stems
 )
