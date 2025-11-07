@@ -6,7 +6,7 @@
 import math
 import torch
 from abc import ABC,  abstractmethod
-from typing import Optional, Tuple
+from typing import Callable, Optional, Tuple
 
 # NATTEN compatibility: Support versions 0.17.x to 0.19.x
 # Note: NATTEN >=0.20 requires additional wrapper updates (not yet implemented)
