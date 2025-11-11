@@ -7,7 +7,7 @@ name = "allin1fix"
 dynamic = ["version"]
 description = "All-In-One Music Structure Analyzer with source separation"
 readme = "README.md"
-requires-python = ">=3.10,<3.11"
+requires-python = ">=3.8"
 license = {text = "MIT"}
 # Note: license-files automatically includes LICENSE by default
 authors = [
@@ -24,7 +24,11 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Topic :: Multimedia :: Sound/Audio",
   "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
@@ -38,6 +42,7 @@ dependencies = [
   "omegaconf",
   "huggingface_hub",
   "matplotlib",
+  "scipy>=1.0.0,<1.13.0",  # Constrain scipy for Python 3.8 compatibility (scipy 1.13+ requires Python 3.9+)
   "madmom @ git+https://github.com/CPJKU/madmom",
   # Source separation (demucs-infer brings: torch, torchaudio, julius, lameenc, diffq, einops, openunmix)
   "demucs-infer @ git+https://github.com/openmirlab/demucs-infer.git",
@@ -81,3 +86,8 @@ packages = ["src/allin1fix"]
 
 [tool.hatch.metadata]
 allow-direct-references = true
+
+[tool.uv]
+override-dependencies = [
+  "scipy>=1.0.0,<1.13.0",  # Override madmom's scipy>=1.13 requirement for Python 3.8 support
+]
