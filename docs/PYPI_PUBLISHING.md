@@ -79,7 +79,7 @@ twine upload dist/*
 ## Post-Publishing Verification
 
 ### 1. Verify Package on PyPI
-- Visit: https://pypi.org/project/allin1fix/
+- Visit: https://pypi.org/project/all-in-one-fix/
 - Check that README renders correctly
 - Verify all metadata is correct
 

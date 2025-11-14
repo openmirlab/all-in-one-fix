@@ -87,7 +87,7 @@ gh workflow run publish.yml
 
 - [ ] Project `all-in-one-fix` exists on PyPI (check https://pypi.org/project/all-in-one-fix/)
 - [ ] Trusted publisher configured in PyPI settings
-- [ ] Project name in trusted publisher matches `allin1fix` exactly
+- [ ] Project name in trusted publisher matches `all-in-one-fix` exactly
 - [ ] GitHub repository owner is `openmirlab`
 - [ ] Repository name is `all-in-one-fix`
 - [ ] Workflow filename is `publish.yml`
