@@ -43,8 +43,8 @@ classifiers = [
 dependencies = [
   "numpy",
   "librosa",
-  "torch>=2.0.0",  # Required FIRST for natten build; also brought by demucs-infer but made explicit
-  "natten==0.17.5",  # NATTEN 0.17.5 verified with PyTorch 2.0-2.7+; 0.20+ requires wrapper updates
+  "torch>=2.0.0,<2.8.0",  # Required FIRST for natten build; PyTorch 2.8+ breaks natten 0.17.5 (_device_t removed)
+  "natten==0.17.5",  # NATTEN 0.17.5 verified with PyTorch 2.0-2.7; PyTorch 2.8+ requires natten 0.21+ (API changes)
   "hydra-core",
   "omegaconf",
   "huggingface_hub",

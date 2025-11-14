@@ -289,14 +289,16 @@ pip install git+https://github.com/CPJKU/madmom
 ### Requirements
 
 - **Python**: 3.9 or later (required for `scipy>=1.13` and `madmom`)
-- **PyTorch**: 2.0.0 or later
+- **PyTorch**: 2.0.0 to <2.8.0 (PyTorch 2.8+ breaks natten 0.17.5 compatibility)
 - **OS**: Linux, macOS, Windows
 
-> **💡 NATTEN Version Compatibility:**
-> - **NATTEN 0.17.5**: Works with PyTorch 2.0-2.6, CUDA 11.7-12.1
-> - **NATTEN 0.21.0**: Works with PyTorch 2.7.0, CUDA 12.8
+> **⚠️ Important Compatibility Note:**
+> - **PyTorch 2.0-2.7**: Fully supported with natten 0.17.5
+> - **PyTorch 2.8+**: Not compatible with natten 0.17.5 (internal API changes). Use PyTorch <2.8.0 or wait for natten 0.21+ support
 >
-> The code automatically adapts to your NATTEN version (0.17.5 through 0.21.0+).
+> **💡 NATTEN Version Compatibility:**
+> - **NATTEN 0.17.5**: Works with PyTorch 2.0-2.7, CUDA 11.7-12.1
+> - **NATTEN 0.21.0+**: Requires code updates (API changes) - not yet supported
 
 ### GPU Support (Optional)
 
