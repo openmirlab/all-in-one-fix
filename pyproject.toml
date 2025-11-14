@@ -80,17 +80,17 @@ Documentation = "https://github.com/openmirlab/all-in-one-fix#readme"
 "Original All-In-One" = "https://github.com/mir-aidj/all-in-one"
 Changelog = "https://github.com/openmirlab/all-in-one-fix/blob/main/docs/CHANGELOG.md"
 
-[tool.hatch.version]
-path = "src/allin1fix/__about__.py"
+# Setuptools configuration (since we're using setuptools.build_meta)
+[tool.setuptools]
+packages = ["allin1fix"]
 
-[tool.hatch.build.targets.wheel]
-packages = ["src/allin1fix"]
+[tool.setuptools.package-dir]
+"" = "src"
 
-[tool.hatch.build.targets.sdist]
-packages = ["src/allin1fix"]
-
-[tool.hatch.metadata]
-allow-direct-references = true
+# Note: Version is read in setup.py from __about__.py
+# Hatchling configs below are kept for reference but not used with setuptools backend
+# [tool.hatch.version]
+# path = "src/allin1fix/__about__.py"
 
 [tool.uv]
 override-dependencies = [

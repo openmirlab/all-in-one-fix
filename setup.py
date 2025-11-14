@@ -7,6 +7,17 @@ from setuptools.command.install import install
 from setuptools.command.develop import develop
 import subprocess
 import sys
+from pathlib import Path
+
+
+def get_version():
+    """Read version from __about__.py"""
+    version_file = Path(__file__).parent / "src" / "allin1fix" / "__about__.py"
+    with open(version_file) as f:
+        for line in f:
+            if line.startswith("__version__"):
+                return line.split("=")[1].strip().strip('"').strip("'")
+    raise RuntimeError("Could not find version in __about__.py")
 
 
 def install_madmom():
@@ -49,8 +60,9 @@ class PostDevelopCommand(develop):
 # Minimal setup - all metadata comes from pyproject.toml (PEP 621)
 # This setup.py is ONLY for the post-install hook to auto-install madmom
 # Setuptools will read pyproject.toml for all package metadata
+# We need to provide version here since setuptools doesn't read hatch.version
 setup(
-    # Empty - all metadata in pyproject.toml
+    version=get_version(),  # Read version from __about__.py
     cmdclass={
         'install': PostInstallCommand,
         'develop': PostDevelopCommand,
