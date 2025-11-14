@@ -291,16 +291,48 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 pip install allin1fix --no-build-isolation
 ```
 
+### ❌ What Won't Work
+
+**This will FAIL:**
+```bash
+pip install allin1fix  # ❌ Missing torch and --no-build-isolation
+```
+
+**Error you'll see:**
+```
+ModuleNotFoundError: No module named 'torch'
+hint: This error likely indicates that `natten@0.17.5` depends on `torch`, 
+but doesn't declare it as a build dependency.
+```
+
+### ✅ Verify Installation
+
+After installation, verify it worked:
+
+```bash
+# Check if installed
+python -c "import allin1fix; print('✅ allin1fix installed successfully!')"
+
+# Check version
+python -c "import allin1fix; print(allin1fix.__version__)"
+
+# Test CLI
+allin1fix --help
+```
+
 ### Troubleshooting
 
 **Installation fails with "No module named 'torch'"**
-- ✅ Solution: Install `torch>=2.0.0` first, then use `--no-build-isolation`
+- ✅ **Cause:** Didn't install torch first or didn't use `--no-build-isolation`
+- ✅ **Solution:** Install `torch>=2.0.0` first, then use `--no-build-isolation`
 
 **Installation fails with scipy version error**
-- ✅ Solution: Ensure Python 3.9+ is used
+- ✅ **Cause:** Using Python < 3.9
+- ✅ **Solution:** Ensure Python 3.9+ is used
 
 **Installation fails with madmom error**
-- ✅ Solution: `madmom` is installed from GitHub - ensure git is available and you have internet access
+- ✅ **Cause:** `madmom` is installed from GitHub, requires git and internet
+- ✅ **Solution:** Ensure git is installed and you have internet access
 
 ---
 
