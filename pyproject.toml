@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling", "torch>=2.0.0"]  # torch required for natten build
+requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
