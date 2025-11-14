@@ -240,8 +240,8 @@ This project integrates two foundational open-source projects:
 # Install PyTorch first
 pip install torch>=2.0.0
 
-# Install allin1fix (madmom will be auto-installed during installation)
-pip install allin1fix --no-build-isolation
+# Install all-in-one-fix (madmom will be auto-installed during installation)
+pip install all-in-one-fix --no-build-isolation
 ```
 
 **Note:** `madmom` will be automatically installed from git during the `allin1fix` installation. If auto-installation fails, install it manually:
@@ -253,7 +253,7 @@ pip install git+https://github.com/CPJKU/madmom
 ```bash
 uv add torch
 uv add git+https://github.com/CPJKU/madmom
-uv add allin1fix --no-build-isolation
+uv add all-in-one-fix --no-build-isolation
 ```
 
 ### Step-by-Step Installation from PyPI
@@ -265,9 +265,9 @@ If you prefer to install step-by-step:
 pip install torch>=2.0.0
 ```
 
-**Step 2:** Install allin1fix (madmom will be auto-installed)
+**Step 2:** Install all-in-one-fix (madmom will be auto-installed)
 ```bash
-pip install allin1fix --no-build-isolation
+pip install all-in-one-fix --no-build-isolation
 ```
 
 **Note:** `madmom` is automatically installed during Step 2. If it fails, install manually:
