@@ -234,15 +234,24 @@ This project integrates two foundational open-source projects:
 
 ### Quick Install from PyPI 🚀
 
-**For most users, use this single command:**
+**For most users, use these commands:**
 
 ```bash
-pip install torch>=2.0.0 && pip install allin1fix --no-build-isolation
+# Install PyTorch first
+pip install torch>=2.0.0
+
+# Install madmom from git (required, PyPI doesn't allow git dependencies)
+pip install git+https://github.com/CPJKU/madmom
+
+# Install allin1fix
+pip install allin1fix --no-build-isolation
 ```
 
 **Or if you prefer UV (faster):**
 ```bash
-uv add torch && uv add allin1fix --no-build-isolation
+uv add torch
+uv add git+https://github.com/CPJKU/madmom
+uv add allin1fix --no-build-isolation
 ```
 
 ### Step-by-Step Installation from PyPI
@@ -254,16 +263,22 @@ If you prefer to install step-by-step:
 pip install torch>=2.0.0
 ```
 
-**Step 2:** Install allin1fix
+**Step 2:** Install madmom from git (required)
+```bash
+pip install git+https://github.com/CPJKU/madmom
+```
+
+**Step 3:** Install allin1fix
 ```bash
 pip install allin1fix --no-build-isolation
 ```
 
-### Why Two Steps?
+### Why Multiple Steps?
 
-⚠️ **Important:** The `natten` dependency requires `torch` during its build process. You must:
-1. Install `torch` **first** (so it's available in your environment)
-2. Use `--no-build-isolation` flag (so `natten` can access `torch` during build)
+⚠️ **Important:** 
+1. **PyTorch** must be installed first because `natten` requires `torch` during its build process
+2. **madmom** must be installed from git because PyPI doesn't allow git dependencies in package metadata
+3. Use `--no-build-isolation` flag when installing `allin1fix` (so `natten` can access `torch` during build)
 
 **What happens if you skip this?**
 - `pip install allin1fix` alone will fail with: `ModuleNotFoundError: No module named 'torch'`
@@ -330,9 +345,13 @@ allin1fix --help
 - ✅ **Cause:** Using Python < 3.9
 - ✅ **Solution:** Ensure Python 3.9+ is used
 
+**ImportError: No module named 'madmom'**
+- ✅ **Cause:** `madmom` must be installed separately from git (PyPI limitation)
+- ✅ **Solution:** Run `pip install git+https://github.com/CPJKU/madmom` before using allin1fix
+
 **Installation fails with madmom error**
-- ✅ **Cause:** `madmom` is installed from GitHub, requires git and internet
-- ✅ **Solution:** Ensure git is installed and you have internet access
+- ✅ **Cause:** Installing `madmom` from GitHub requires git and internet
+- ✅ **Solution:** Ensure git is installed (`apt install git` or `brew install git`) and you have internet access
 
 ---
 

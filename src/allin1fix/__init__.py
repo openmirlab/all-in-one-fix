@@ -1,5 +1,15 @@
 __version__ = "2.0.0"
 
+# Check for required madmom dependency
+try:
+    import madmom
+except ImportError:
+    raise ImportError(
+        "madmom is required but not installed. "
+        "Please install it with: pip install git+https://github.com/CPJKU/madmom\n"
+        "See README.md for complete installation instructions."
+    )
+
 from .analyze import analyze
 from .visualize import visualize
 from .sonify import sonify
