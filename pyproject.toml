@@ -84,9 +84,17 @@ Changelog = "https://github.com/openmirlab/all-in-one-fix/blob/main/docs/CHANGEL
 
 # Setuptools configuration (since we're using setuptools.build_meta)
 [tool.setuptools]
-# Use find: to automatically discover all packages and subpackages
-# Exclude examples and tests directories (they're not in src/)
-packages = {find = {where = "src", exclude = ["tests*", "examples*"]}}
+# Explicitly list all packages and subpackages to include
+packages = [
+    "allin1fix",
+    "allin1fix.models",
+    "allin1fix.postprocessing",
+    "allin1fix.training",
+    "allin1fix.training.data",
+    "allin1fix.training.data.datasets",
+    "allin1fix.training.data.datasets.harmonix",
+    "allin1fix.training.data.eventconverters",
+]
 
 [tool.setuptools.package-dir]
 "" = "src"
