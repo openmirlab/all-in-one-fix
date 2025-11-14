@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "torch>=2.0.0"]  # torch required for natten build
 build-backend = "hatchling.build"
 
 [project]
@@ -7,14 +7,14 @@ name = "allin1fix"
 dynamic = ["version"]
 description = "All-In-One Music Structure Analyzer with source separation"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"  # scipy>=1.13 and madmom require Python>=3.9
 license = {text = "MIT"}
 # Note: license-files automatically includes LICENSE by default
 authors = [
   { name = "Taejun Kim", email = "taejun@kaist.ac.kr" },
 ]
 maintainers = [
-  { name = "worzpro Development Team" },
+  { name = "Package Maintainers" },
 ]
 keywords = ["music", "beat", "downbeat", "tracking", "structure", "analysis", "allin1fix", "source-separation"]
 classifiers = [
@@ -34,18 +34,21 @@ classifiers = [
 ]
 
 # Core dependencies
+# IMPORTANT: torch MUST be listed before natten for proper installation order
+# natten requires torch during build, so torch must be installed first
 dependencies = [
   "numpy",
   "librosa",
-  "natten>=0.17.5,<0.20",  # NATTEN 0.17.x verified with PyTorch 2.0-2.7+; 0.20+ requires wrapper updates
+  "torch>=2.0.0",  # Required FIRST for natten build; also brought by demucs-infer but made explicit
+  "natten==0.17.5",  # NATTEN 0.17.5 verified with PyTorch 2.0-2.7+; 0.20+ requires wrapper updates
   "hydra-core",
   "omegaconf",
   "huggingface_hub",
   "matplotlib",
-  "scipy>=1.0.0,<1.13.0",  # Constrain scipy for Python 3.8 compatibility (scipy 1.13+ requires Python 3.9+)
+  "scipy>=1.0.0",  # scipy 1.13+ requires Python 3.9+, but madmom requires scipy>=1.13
   "madmom @ git+https://github.com/CPJKU/madmom",
   # Source separation (demucs-infer brings: torch, torchaudio, julius, lameenc, diffq, einops, openunmix)
-  "demucs-infer @ git+https://github.com/openmirlab/demucs-infer.git",
+  "demucs-infer",
 ]
 
 [project.optional-dependencies]
@@ -89,5 +92,5 @@ allow-direct-references = true
 
 [tool.uv]
 override-dependencies = [
-  "scipy>=1.0.0,<1.13.0",  # Override madmom's scipy>=1.13 requirement for Python 3.8 support
+  "scipy>=1.13.0",  # madmom requires scipy>=1.13, which requires Python 3.9+
 ]

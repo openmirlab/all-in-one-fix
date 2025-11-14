@@ -148,7 +148,7 @@ all-in-one-fix/
 |---------|--------------|-----------|
 | Build backend | hatchling | hatchling ✅ |
 | License format | `{text = "MIT"}` | `{text = "MIT"}` ✅ |
-| Maintainers | worzpro Team | worzpro Team ✅ |
+| Maintainers | Package Maintainers | Package Maintainers ✅ |
 | Enhanced classifiers | Yes | Yes ✅ |
 | Project URLs | 6 URLs | 6 URLs ✅ |
 | Wheel + sdist | Yes | Yes ✅ |

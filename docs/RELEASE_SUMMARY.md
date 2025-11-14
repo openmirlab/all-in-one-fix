@@ -25,7 +25,7 @@ Made the package publishable following the `demucs-infer` pattern:
 
 #### `pyproject.toml` Enhancements:
 - ✅ Changed license format: `"MIT"` → `{text = "MIT"}`
-- ✅ Added `maintainers` field (worzpro Development Team)
+- ✅ Added `maintainers` field (Package Maintainers)
 - ✅ Enhanced classifiers for PyPI discovery (10 classifiers)
 - ✅ Added 6 comprehensive project URLs
 - ✅ Changed demucs-infer: local path → GitHub repository

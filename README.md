@@ -228,15 +228,52 @@ This project integrates two foundational open-source projects:
 - **Source separation** → demucs-infer package (openmirlab/demucs-infer)
 - **This fork** → PyTorch 2.x compatibility, performance improvements, modern tooling
 
-## Installation
+## 📦 Installation
+
+**📦 Available on PyPI:** [https://pypi.org/project/allin1fix/](https://pypi.org/project/allin1fix/)
+
+### Quick Install from PyPI 🚀
+
+**For most users, use this single command:**
+
+```bash
+pip install torch>=2.0.0 && pip install allin1fix --no-build-isolation
+```
+
+**Or if you prefer UV (faster):**
+```bash
+uv add torch && uv add allin1fix --no-build-isolation
+```
+
+### Step-by-Step Installation from PyPI
+
+If you prefer to install step-by-step:
+
+**Step 1:** Install PyTorch first (required)
+```bash
+pip install torch>=2.0.0
+```
+
+**Step 2:** Install allin1fix
+```bash
+pip install allin1fix --no-build-isolation
+```
+
+### Why Two Steps?
+
+⚠️ **Important:** The `natten` dependency requires `torch` during its build process. You must:
+1. Install `torch` **first** (so it's available in your environment)
+2. Use `--no-build-isolation` flag (so `natten` can access `torch` during build)
+
+**What happens if you skip this?**
+- `pip install allin1fix` alone will fail with: `ModuleNotFoundError: No module named 'torch'`
+- This is because pip's build isolation prevents access to installed packages during build
 
 ### Requirements
-- **Python**: 3.10
-- **PyTorch**: 2.0+ (tested up to 2.7.0)
-- **NATTEN**: 0.17.5+ (supports up to 0.21.0+)
-- **GPU**: CUDA-capable GPU recommended (CPU supported)
 
-allin1fix supports both **UV** (recommended, faster) and **pip** (traditional) installation methods.
+- **Python**: 3.9 or later (required for `scipy>=1.13` and `madmom`)
+- **PyTorch**: 2.0.0 or later
+- **OS**: Linux, macOS, Windows
 
 > **💡 NATTEN Version Compatibility:**
 > - **NATTEN 0.17.5**: Works with PyTorch 2.0-2.6, CUDA 11.7-12.1
@@ -244,99 +281,63 @@ allin1fix supports both **UV** (recommended, faster) and **pip** (traditional) i
 >
 > The code automatically adapts to your NATTEN version (0.17.5 through 0.21.0+).
 
-### Option 1: UV (Recommended) ⚡
+### GPU Support (Optional)
 
-[UV](https://github.com/astral-sh/uv) is a blazing-fast Python package installer and resolver.
-
-#### Standard Installation (NATTEN 0.17.5, PyTorch 2.0-2.6)
+For GPU acceleration, install PyTorch with CUDA support:
 
 ```bash
-# Install UV if you haven't already
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Install PyTorch (example: CUDA 12.1)
-uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-
-# Install NATTEN 0.17.5
-uv pip install natten==0.17.5
-
-# Install from GitHub
-uv pip install git+https://github.com/openmirlab/all-in-one-fix.git
-
-# Run the CLI
-uv run allin1fix your_audio_file.wav
-```
-
-#### Latest Version (NATTEN 0.21.0, PyTorch 2.7.0, CUDA 12.8)
-
-```bash
-# Install UV if you haven't already
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Install PyTorch 2.7.0 with CUDA 12.8
-uv pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0
-
-# Install NATTEN 0.21.0 from whl.natten.org
-uv pip install natten==0.21.0+torch270cu128 -f https://whl.natten.org
-
-# Install from GitHub
-uv pip install git+https://github.com/openmirlab/all-in-one-fix.git
-
-# Run the CLI
-uv run allin1fix your_audio_file.wav
-```
-
-#### Development Installation
-
-```bash
-git clone https://github.com/openmirlab/all-in-one-fix.git
-cd all-in-one-fix
-uv pip install -e .
-```
-
-**Benefits of UV:**
-- ⚡ 10-100x faster than pip
-- 🔒 Automatic virtual environment management
-- 📦 Consistent dependency resolution
-- 🎯 Works seamlessly with GitHub dependencies
-
-### Option 2: pip (Traditional)
-
-#### Standard Installation (NATTEN 0.17.5, PyTorch 2.0-2.6)
-
-```bash
-# Install PyTorch (example: CUDA 12.1)
+# Example: CUDA 12.1
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-
-# Install NATTEN 0.17.5
-pip install natten==0.17.5
-
-# Install from GitHub
-pip install git+https://github.com/openmirlab/all-in-one-fix.git
+pip install allin1fix --no-build-isolation
 ```
 
-#### Latest Version (NATTEN 0.21.0, PyTorch 2.7.0, CUDA 12.8)
+### Troubleshooting
 
+**Installation fails with "No module named 'torch'"**
+- ✅ Solution: Install `torch>=2.0.0` first, then use `--no-build-isolation`
+
+**Installation fails with scipy version error**
+- ✅ Solution: Ensure Python 3.9+ is used
+
+**Installation fails with madmom error**
+- ✅ Solution: `madmom` is installed from GitHub - ensure git is available and you have internet access
+
+---
+
+### Installation from GitHub (Development)
+
+If you want to install the latest development version from GitHub:
+
+**Using UV (Recommended):**
 ```bash
-# Install PyTorch 2.7.0 with CUDA 12.8
-pip install torch==2.7.0 torchvision==0.22.0 torchaudio==2.7.0
+# Install UV if you haven't already
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install NATTEN 0.21.0 from whl.natten.org
-pip install natten==0.21.0+torch270cu128 -f https://whl.natten.org
+# Install PyTorch first
+uv pip install torch>=2.0.0
 
 # Install from GitHub
-pip install git+https://github.com/openmirlab/all-in-one-fix.git
+uv pip install git+https://github.com/openmirlab/all-in-one-fix.git --no-build-isolation
 ```
 
-#### Development Installation
+**Using pip:**
+```bash
+# Install PyTorch first
+pip install torch>=2.0.0
 
+# Install from GitHub
+pip install git+https://github.com/openmirlab/all-in-one-fix.git --no-build-isolation
+```
+
+**Development Installation (Editable):**
 ```bash
 git clone https://github.com/openmirlab/all-in-one-fix.git
 cd all-in-one-fix
-pip install -e .
+pip install torch>=2.0.0
+pip install -e . --no-build-isolation
 ```
 
-**Note:** All dependencies (including **demucs-infer** and **madmom**) will be installed automatically from GitHub. You must install PyTorch and NATTEN separately before installing allin1fix.
+**Note:** All dependencies (including **demucs-infer** and **madmom**) will be installed automatically from GitHub. You must install PyTorch first before installing allin1fix.
 
 ### (Optional) Install FFmpeg for MP3 support
 

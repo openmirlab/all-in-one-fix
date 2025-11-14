@@ -15,25 +15,27 @@ def test_original_allinone():
     print("=" * 60)
     
     # Change to original all-in-one directory
-    original_dir = Path('/home/worzpro/Desktop/dev/patched_modules/all-in-one')
+    # NOTE: Update this path to your local all-in-one repository
+    original_dir = Path('../all-in-one')  # Relative path, update as needed
     
-    # Test tracks - copy them to original directory for testing
+    # Test tracks - update paths to your test audio files
+    # NOTE: These are example paths - update to your actual test audio locations
     test_tracks = [
         {
             'name': 'Sunflower 60BPM.mp3',
-            'source': '/home/worzpro/Desktop/dev/worzpro-demo/assets/audio_samples/Sunflower 60BPM.mp3',
+            'source': 'assets/Sunflower 60BPM.mp3',  # Update to your test file path
             'expected_bpm': 60,
             'description': 'Simple track - should work'
         },
         {
             'name': 'Nujabes - Luv(sic) Part 2 feat.Shing02.wav', 
-            'source': '/home/worzpro/Desktop/dev/worzpro-demo/assets/audio_samples/Nujabes - Luv(sic) Part 2 feat.Shing02.wav',
+            'source': 'assets/Nujabes - Luv(sic) Part 2 feat.Shing02.wav',  # Update to your test file path
             'expected_bpm': 85,
             'description': 'Complex jazz - may have DBN issues'
         },
         {
             'name': "NewJeans (뉴진스) 'Super Shy' Official MV.wav",
-            'source': "/home/worzpro/Desktop/dev/worzpro-demo/assets/audio_samples/NewJeans (뉴진스) 'Super Shy' Official MV.wav",
+            'source': "assets/NewJeans (뉴진스) 'Super Shy' Official MV.wav",  # Update to your test file path
             'expected_bpm': 125,
             'description': 'K-pop - activation strength test'
         }
