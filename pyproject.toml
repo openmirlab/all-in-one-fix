@@ -5,7 +5,9 @@ build-backend = "setuptools.build_meta"
 # Metadata is still defined in pyproject.toml (PEP 621)
 
 [project]
-name = "allin1fix"
+name = "all-in-one-fix"  # PyPI project name (matches repository name)
+# Note: Python package name is still "allin1fix" (in src/allin1fix/)
+# This allows: import allin1fix (Python) while PyPI project is all-in-one-fix
 dynamic = ["version"]
 description = "All-In-One Music Structure Analyzer with source separation"
 readme = "README.md"

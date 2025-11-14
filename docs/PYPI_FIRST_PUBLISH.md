@@ -9,7 +9,7 @@ If you see this error:
 Non-user identities cannot create new projects. This was probably caused by successfully using a pending publisher but specifying the project name incorrectly...
 ```
 
-This means the project `allin1fix` doesn't exist on PyPI yet and needs to be created manually first.
+This means the project `all-in-one-fix` doesn't exist on PyPI yet and needs to be created manually first.
 
 ## Solution: Two-Step Process
 
@@ -37,12 +37,12 @@ You need to create the project on PyPI using a **user account** (not OIDC):
    - Option B: Use PyPI web interface
      - Go to: https://pypi.org/manage/projects/
      - Click "Add new project"
-     - Enter project name: `allin1fix`
+     - Enter project name: `all-in-one-fix`
      - Fill in basic metadata
      - Upload an initial version
 
 3. **Verify project exists:**
-   - Check: https://pypi.org/project/allin1fix/
+   - Check: https://pypi.org/project/all-in-one-fix/
    - The project should now exist (even if empty or with a dummy version)
 
 ### Step 2: Configure Trusted Publishing (For Future Uploads)
@@ -56,13 +56,16 @@ Once the project exists, configure trusted publishing:
 2. **Add Trusted Publisher:**
    - Click "Add a new pending publisher"
    - Fill in:
-     - **PyPI project name:** `allin1fix` ⚠️ **Must match exactly** the `name` field in `pyproject.toml` (currently `allin1fix`)
+     - **PyPI project name:** `all-in-one-fix` ⚠️ **Must match exactly** the `name` field in `pyproject.toml`
      - **Owner:** `openmirlab`
      - **Repository name:** `all-in-one-fix` ⚠️ **Must match exactly** the GitHub repository name
      - **Workflow filename:** `publish.yml`
      - **Environment name:** (leave empty)
    
-   **Note:** The PyPI project name (`allin1fix`) and repository name (`all-in-one-fix`) are different - this is OK! They just need to match their respective sources exactly.
+   **Note:** 
+   - PyPI project name (`all-in-one-fix`) now matches repository name ✅
+   - Python package name is `allin1fix` (used in imports: `import allin1fix`)
+   - CLI commands are `allin1fix`, `allin1fix-train`, etc.
 
 3. **Verify Configuration:**
    - The publisher should appear as "pending"
@@ -82,7 +85,7 @@ gh workflow run publish.yml
 
 ## Quick Checklist
 
-- [ ] Project `allin1fix` exists on PyPI (check https://pypi.org/project/allin1fix/)
+- [ ] Project `all-in-one-fix` exists on PyPI (check https://pypi.org/project/all-in-one-fix/)
 - [ ] Trusted publisher configured in PyPI settings
 - [ ] Project name in trusted publisher matches `allin1fix` exactly
 - [ ] GitHub repository owner is `openmirlab`
@@ -97,7 +100,7 @@ gh workflow run publish.yml
 
 ### Error: "Project name mismatch"
 - **Cause:** Trusted publisher project name doesn't match `pyproject.toml`
-- **Fix:** Verify trusted publisher uses exact name `allin1fix` (case-sensitive)
+- **Fix:** Verify trusted publisher uses exact name `all-in-one-fix` (case-sensitive, matches repository)
 
 ### Error: "Repository not found"
 - **Cause:** Wrong owner or repository name in trusted publisher

@@ -230,7 +230,7 @@ This project integrates two foundational open-source projects:
 
 ## 📦 Installation
 
-**📦 Available on PyPI:** [https://pypi.org/project/allin1fix/](https://pypi.org/project/allin1fix/)
+**📦 Available on PyPI:** [https://pypi.org/project/all-in-one-fix/](https://pypi.org/project/all-in-one-fix/)
 
 ### Quick Install from PyPI 🚀
 

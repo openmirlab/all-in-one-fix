@@ -1,6 +1,11 @@
-# PyPI Publishing Guide for allin1fix
+# PyPI Publishing Guide for all-in-one-fix
 
-This guide covers best practices for publishing `allin1fix` to PyPI, including handling the `natten` build requirement.
+This guide covers best practices for publishing `all-in-one-fix` to PyPI, including handling the `natten` build requirement.
+
+**Note:** 
+- PyPI project name: `all-in-one-fix` (matches repository name)
+- Python package name: `allin1fix` (used in imports: `import allin1fix`)
+- Install with: `pip install all-in-one-fix` (uses PyPI project name)
 
 ## Pre-Publishing Checklist
 

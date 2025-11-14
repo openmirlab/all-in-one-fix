@@ -9,15 +9,16 @@
 2. **Add Trusted Publisher:**
    - Click "Add a new pending publisher"
    - Fill in the following:
-     - **PyPI project name:** `allin1fix` ⚠️ **Must match exactly** the `name` field in `pyproject.toml`
+     - **PyPI project name:** `all-in-one-fix` ⚠️ **Must match exactly** the `name` field in `pyproject.toml`
      - **Owner:** `openmirlab`
      - **Repository name:** `all-in-one-fix` ⚠️ **Must match exactly** the GitHub repository name
      - **Workflow filename:** `publish.yml`
      - **Environment name:** (leave empty)
    
-   **Important:** The PyPI project name (`allin1fix`) and repository name (`all-in-one-fix`) don't need to match each other, but:
-   - PyPI project name must match `pyproject.toml` `name` field exactly
-   - Repository name must match GitHub repository name exactly
+   **Important:** 
+   - PyPI project name (`all-in-one-fix`) now matches repository name (`all-in-one-fix`) ✅
+   - Python package name is `allin1fix` (used in imports: `import allin1fix`)
+   - CLI commands are `allin1fix`, `allin1fix-train`, etc. (based on Python package name)
 
 3. **Verify Configuration:**
    - The publisher should appear as "pending" until the next workflow run
@@ -54,4 +55,4 @@ twine upload dist/*
 
 1. Configure PyPI trusted publishing (see steps above)
 2. Re-run the workflow: `gh workflow run publish.yml`
-3. Verify publication: https://pypi.org/project/allin1fix/
+3. Verify publication: https://pypi.org/project/all-in-one-fix/
