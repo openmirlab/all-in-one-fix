@@ -9,11 +9,15 @@
 2. **Add Trusted Publisher:**
    - Click "Add a new pending publisher"
    - Fill in the following:
-     - **PyPI project name:** `allin1fix`
+     - **PyPI project name:** `allin1fix` ⚠️ **Must match exactly** the `name` field in `pyproject.toml`
      - **Owner:** `openmirlab`
-     - **Repository name:** `all-in-one-fix`
+     - **Repository name:** `all-in-one-fix` ⚠️ **Must match exactly** the GitHub repository name
      - **Workflow filename:** `publish.yml`
      - **Environment name:** (leave empty)
+   
+   **Important:** The PyPI project name (`allin1fix`) and repository name (`all-in-one-fix`) don't need to match each other, but:
+   - PyPI project name must match `pyproject.toml` `name` field exactly
+   - Repository name must match GitHub repository name exactly
 
 3. **Verify Configuration:**
    - The publisher should appear as "pending" until the next workflow run
