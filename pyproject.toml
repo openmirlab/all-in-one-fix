@@ -46,7 +46,7 @@ dependencies = [
   "huggingface_hub",
   "matplotlib",
   "scipy>=1.0.0",  # scipy 1.13+ requires Python 3.9+, but madmom requires scipy>=1.13
-  "madmom @ git+https://github.com/CPJKU/madmom",
+  "madmom",  # Available on PyPI; users can install from git if needed for latest version
   # Source separation (demucs-infer brings: torch, torchaudio, julius, lameenc, diffq, einops, openunmix)
   "demucs-infer",
 ]
