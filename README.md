@@ -2,8 +2,11 @@
 
 [![Visual Demo](https://img.shields.io/badge/Visual-Demo-8A2BE2)](https://taejun.kim/music-dissector/)
 [![arXiv](https://img.shields.io/badge/arXiv-2307.16425-B31B1B)](http://arxiv.org/abs/2307.16425/)
+[![PyPI](https://img.shields.io/pypi/v/all-in-one-fix)](https://pypi.org/project/all-in-one-fix/)
 
 **An enhanced version of All-In-One with integrated source separation and modern PyTorch compatibility**
+
+📦 **Available on PyPI:** [https://pypi.org/project/all-in-one-fix/](https://pypi.org/project/all-in-one-fix/)
 
 > **🙏 Acknowledgments**:
 >

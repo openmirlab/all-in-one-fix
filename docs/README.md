@@ -27,11 +27,10 @@ This directory contains detailed documentation for the All-In-One-Fix package.
   - Publishing readiness checklist
   - Comparison with demucs-infer pattern
 
-- **[NATTEN_COMPATIBILITY_TEST.md](NATTEN_COMPATIBILITY_TEST.md)** - NATTEN compatibility verification
-  - Test methodology and results
-  - Three-tier compatibility system explanation
-  - Supported NATTEN versions (0.17.5-0.21.0+)
-  - Installation verification guide
+- **[PYPI_PUBLISHING.md](PYPI_PUBLISHING.md)** - PyPI publishing guide
+  - Publishing checklist and best practices
+  - GitHub Actions workflow
+  - Build and installation testing
 
 ### Training & Research
 
@@ -67,5 +66,5 @@ If you're new to All-In-One-Fix:
 For contributors and developers:
 1. Review [RELEASE_SUMMARY.md](RELEASE_SUMMARY.md) for complete change history
 2. Check [PACKAGE_STRUCTURE.md](PACKAGE_STRUCTURE.md) for technical details
-3. See [NATTEN_COMPATIBILITY_TEST.md](NATTEN_COMPATIBILITY_TEST.md) for compatibility info
+3. See [PYPI_PUBLISHING.md](PYPI_PUBLISHING.md) for publishing guidelines
 4. Reference [CHANGELOG.md](CHANGELOG.md) for version history
