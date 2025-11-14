@@ -1,12 +1,14 @@
 __version__ = "2.0.0"
 
 # Check for required madmom dependency
+# Note: madmom should be auto-installed during package installation via setup.py hook
 try:
     import madmom
 except ImportError:
     raise ImportError(
         "madmom is required but not installed. "
         "Please install it with: pip install git+https://github.com/CPJKU/madmom\n"
+        "If you just installed allin1fix, the auto-install may have failed.\n"
         "See README.md for complete installation instructions."
     )
 

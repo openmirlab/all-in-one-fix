@@ -1,6 +1,8 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+# Note: Using setuptools to support post-install hook for auto-installing madmom
+# Metadata is still defined in pyproject.toml (PEP 621)
 
 [project]
 name = "allin1fix"
@@ -46,8 +48,7 @@ dependencies = [
   "huggingface_hub",
   "matplotlib",
   "scipy>=1.0.0",  # scipy 1.13+ requires Python 3.9+, but madmom requires scipy>=1.13
-  # Note: madmom must be installed separately from git (see README.md for installation instructions)
-  # PyPI does not allow direct git dependencies in dependencies field
+  # Note: madmom is auto-installed via setup.py post-install hook (PyPI doesn't allow git dependencies)
   # Source separation (demucs-infer brings: torch, torchaudio, julius, lameenc, diffq, einops, openunmix)
   "demucs-infer",
 ]

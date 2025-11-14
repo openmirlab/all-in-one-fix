@@ -240,11 +240,13 @@ This project integrates two foundational open-source projects:
 # Install PyTorch first
 pip install torch>=2.0.0
 
-# Install madmom from git (required, PyPI doesn't allow git dependencies)
-pip install git+https://github.com/CPJKU/madmom
-
-# Install allin1fix
+# Install allin1fix (madmom will be auto-installed during installation)
 pip install allin1fix --no-build-isolation
+```
+
+**Note:** `madmom` will be automatically installed from git during the `allin1fix` installation. If auto-installation fails, install it manually:
+```bash
+pip install git+https://github.com/CPJKU/madmom
 ```
 
 **Or if you prefer UV (faster):**
@@ -263,22 +265,22 @@ If you prefer to install step-by-step:
 pip install torch>=2.0.0
 ```
 
-**Step 2:** Install madmom from git (required)
-```bash
-pip install git+https://github.com/CPJKU/madmom
-```
-
-**Step 3:** Install allin1fix
+**Step 2:** Install allin1fix (madmom will be auto-installed)
 ```bash
 pip install allin1fix --no-build-isolation
+```
+
+**Note:** `madmom` is automatically installed during Step 2. If it fails, install manually:
+```bash
+pip install git+https://github.com/CPJKU/madmom
 ```
 
 ### Why Multiple Steps?
 
 ⚠️ **Important:** 
 1. **PyTorch** must be installed first because `natten` requires `torch` during its build process
-2. **madmom** must be installed from git because PyPI doesn't allow git dependencies in package metadata
-3. Use `--no-build-isolation` flag when installing `allin1fix` (so `natten` can access `torch` during build)
+2. Use `--no-build-isolation` flag when installing `allin1fix` (so `natten` can access `torch` during build)
+3. **madmom** is automatically installed from git during `allin1fix` installation (PyPI doesn't allow git dependencies, so we use a post-install hook)
 
 **What happens if you skip this?**
 - `pip install allin1fix` alone will fail with: `ModuleNotFoundError: No module named 'torch'`
