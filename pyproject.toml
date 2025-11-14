@@ -85,7 +85,8 @@ Changelog = "https://github.com/openmirlab/all-in-one-fix/blob/main/docs/CHANGEL
 # Setuptools configuration (since we're using setuptools.build_meta)
 [tool.setuptools]
 # Use find: to automatically discover all packages and subpackages
-packages = {find = {}}
+# Exclude examples and tests directories (they're not in src/)
+packages = {find = {where = "src", exclude = ["tests*", "examples*"]}}
 
 [tool.setuptools.package-dir]
 "" = "src"
